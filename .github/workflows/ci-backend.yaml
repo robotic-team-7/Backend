@@ -5,23 +5,20 @@ on: push
 jobs:
   ci-backend:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app
     strategy:
       matrix:
         node-version: [17.x]
-    env:
-      working-directory: ./backend-app
     steps:
     - uses: actions/checkout@v2
     - name: test
       run: pwd && ls
-      working-directory: ${{env.working-directory}}
     - run: pwd && ls
-      working-directory: ${{env.working-directory}}
     - name: Use Node.js ${{ matrix.node-version }}
-      # working-directory: ${{env.working-directory}}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm run build
-      working-directory: ${{env.working-directory}}
