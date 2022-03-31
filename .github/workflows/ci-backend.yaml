@@ -13,9 +13,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: pwd && ls
+      working-directory: ${{env.working-directory}}
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+      working-directory: ${{env.working-directory}}
     - run: npm run build
+      working-directory: ${{env.working-directory}}
