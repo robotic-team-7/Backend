@@ -12,11 +12,14 @@ jobs:
       working-directory: ./backend-app
     steps:
     - uses: actions/checkout@v2
+    - name: test
+      run: pwd && ls
+      working-directory: ${{env.working-directory}}
     - run: pwd && ls
       working-directory: ${{env.working-directory}}
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
       working-directory: ${{env.working-directory}}
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
