@@ -18,7 +18,7 @@ jobs:
     - run: pwd && ls
       working-directory: ${{env.working-directory}}
     - name: Use Node.js ${{ matrix.node-version }}
-      working-directory: ${{env.working-directory}}
+      # working-directory: ${{env.working-directory}}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
