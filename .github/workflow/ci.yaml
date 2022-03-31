@@ -1,0 +1,13 @@
+name: CI
+
+on: push
+
+jobs:
+
+  ci:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [17.x]
+    steps:
+    - uses: actions/checkout@v2
