@@ -13,12 +13,4 @@ jobs:
         node-version: [17.x]
     steps:
     - uses: actions/checkout@v2
-    - name: test
-      run: pwd && ls
-    - run: pwd && ls
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
     - run: npm run build
