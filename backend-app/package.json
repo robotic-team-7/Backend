@@ -4,12 +4,13 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "nodemon -L src/app.js"
+        "start": "nodemon -L src/index.js"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "awilix": "^7.0.1",
         "express": "^4.17.3",
         "nodemon": "^2.0.15"
     }
