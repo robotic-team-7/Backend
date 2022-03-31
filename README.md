@@ -2,7 +2,7 @@
 ## To start the app
 Navigate to /backend folder and run following command:
 ```
-docker-compose up
+docker-compose up --build
 ```
 ## To close the app
 Run following command:
