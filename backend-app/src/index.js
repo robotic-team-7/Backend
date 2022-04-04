@@ -4,7 +4,7 @@ const container = awilix.createContainer()
 container.register({
 
     //api-layer
-    restRouter: awilix.asFunction(require('./api-layer/rest-router')),
+    mobileRouter: awilix.asFunction(require('./api-layer/mobile-router')),
 
     //logic-layer
 
