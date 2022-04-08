@@ -16,10 +16,16 @@ module.exports = function({ mooverInterface }) {
              }
          })
      })
-     
 
+     router.post('/start', async function(request, response){ //post or put i dont know yet
+
+     })
+
+     router.post('/stop', async function(request, response){
+
+     })
+    
     router.get('/:id', function(request, response) {
-
         const id = request.params.id
         mooverInterface. (id, function(errors, moover) {
             if (errors.length == 0 && moover.length == 0) {
@@ -32,6 +38,19 @@ module.exports = function({ mooverInterface }) {
         })
     })
     */
+
+    router.post('/', function(request, response) {
+        const userID = request.body.UserID
+        const serialNumber = request.body.SerialNumber
+        const status = request.body.Status
+        mooverInterface.createMoover(userID, serialNumber, status, function(error, MooverID) {
+            if (error.length == 0) {
+                response.status(201).json(MooverID)
+            } else {
+                response.status(404).end()
+            }
+        })
+    })
 
     router.post('/', function(request, response) {
             const userID = request.body.UserID

@@ -1,9 +1,10 @@
 const express = require("express")
 const bodyParser = require('body-parser');
+const mobileRouter = require("./mobile-router");
 const app = express()
 
 
-module.exports = function({ moverRouter }) {
+module.exports = function({ mobileRouter }) {
     app.use(bodyParser.json())
 
 
@@ -12,7 +13,7 @@ module.exports = function({ moverRouter }) {
     })
 
 
-    app.use('/mover', moverRouter)
+    app.use('/mobile', mobileRouter)
 
 
 
