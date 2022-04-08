@@ -2,18 +2,13 @@ const express = require("express")
 const app = express()
 
 
-module.exports = function({ restRouter }) {
+module.exports = function({ mobileRouter }) {
 
     app.get("/", function(request, response) {
-
         response.send("Backend is working!")
-
     })
 
-
-    app.use('/rest', restRouter)
-
-
+    app.use('/mobile', mobileRouter)
 
     return app
 }
