@@ -29,7 +29,7 @@ module.exports = function({ db }) {
                 returning: true,
                 raw: true
             })
-            .then(mower => callback([], mower.Status))
+            .then(mower => callback([], mower[1][0].Status))
             .catch(e => {
                 console.log(e)
                 callback(e, [])

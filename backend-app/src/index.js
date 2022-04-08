@@ -8,6 +8,7 @@ container.register({
 
     //logic-layer
     mowerInterface: awilix.asFunction(require('./logic-layer/interfaces/mower-interface')),
+    positionsInterface: awilix.asFunction(require('./logic-layer/interfaces/positions-interface')),
 
     //data-layer
     db: awilix.asFunction(require('./data-layer/database/database-init/db-init')),
