@@ -1,12 +1,12 @@
 /* Rest api, file included to keep folder on git*/
 const express = require("express")
 
-module.exports = function({ mooverInterface }) {
+module.exports = function({ mowerInterface }) {
 
     const router = express.Router()
 
     /* router.get('/', async function(request, response) {
-         mooverInterface. (function(error, moovers) {
+         mowerInterface. (function(error, moovers) {
              if (error.length == 0 && moovers.length == 0) {
                  response.status(404).end()
              } else if (error.length == 0) {
@@ -43,7 +43,7 @@ module.exports = function({ mooverInterface }) {
         const userID = request.body.UserID
         const serialNumber = request.body.SerialNumber
         const status = request.body.Status
-        mooverInterface.createMoover(userID, serialNumber, status, function(error, MooverID) {
+        mowerInterface.createMower(userID, serialNumber, status, function(error, MooverID) {
             if (error.length == 0) {
                 response.status(201).json(MooverID)
             } else {
@@ -52,26 +52,31 @@ module.exports = function({ mooverInterface }) {
         })
     })
 
-    router.post('/', function(request, response) {
-            const userID = request.body.UserID
-            const serialNumber = request.body.SerialNumber
-            const status = request.body.Status
-            mooverInterface.createMoover(userID, serialNumber, status, function(error, MooverID) {
-                if (error.length == 0) {
-                    response.status(201).json(MooverID)
-                } else {
-                    response.status(404).end()
-                }
-            })
-        })
-        /*
-            router.delete('/:id', (request, response) {
-                
-            })
 
-            router.put('/:id', function (request, response) {
-                
-            })
-        */
+    router.delete('/:id', function(request, response) {
+        const mowerID = request.params.id
+        mowerInterface.deleteMower(mowerID, function(error, mowerDeleted) {
+            if (error.length == 0 && mowerDeleted) {
+                response.status(204).json()
+            } else if (error.length == 0 && !mowerDeleted) {
+                response.status(404).json()
+            } else {
+                response.status(500).json(error)
+            }
+        })
+    })
+
+    router.put('/:id', function(request, response) {
+        const mowerID = request.params.id
+        const newStatus = request.body.Status
+        mowerInterface.updateMowerStatus(mowerID, newStatus, function(errors, mower) {
+            if (errors.length == 0) {
+                response.status(200).json(mower)
+            } else {
+                response.status(400).json(errors)
+            }
+        })
+    })
+
     return router
 }

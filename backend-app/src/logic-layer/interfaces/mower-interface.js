@@ -12,7 +12,6 @@ module.exports = function({ mowerRepository }) {
                 callback([], MowerID)
             }
         })
-
     }
 
 
