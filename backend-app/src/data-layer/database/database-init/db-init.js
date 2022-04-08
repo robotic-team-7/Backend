@@ -37,18 +37,79 @@ try {
         timestamps: false
     });
 
+    /* Creates table Positions */
+    const Positions = sequelize.define('Positions', {
+        PositionID: {
+            primaryKey: true,
+            autoIncrement: true,
+            type: DataTypes.INTEGER,
+            unique: true,
+            allowNull: false
+        },
+        MooverID: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        Positions: {
+            type: DataTypes.JSON,
+            allowNull: false
+        },
+        Status: {
+            primaryKey: true,
+            type: DataTypes.BOOLEAN,
+            allowNull: false
+        },
+    }, {
+        timestamps: true,
+        createdAt: true,
+        updatedAt: false,
+        deletedAt: false,
+    });
+
+    /* Creates table Pictures */
+    const Pictures = sequelize.define('Pictures', {
+        PictureID: {
+            primaryKey: true,
+            autoIncrement: true,
+            type: DataTypes.INTEGER,
+            unique: true,
+            allowNull: false
+        },
+        UserID: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        MowerID: {
+            unique: true,
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        ImageClassification: {
+            primaryKey: true,
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        Path: {
+            primaryKey: true,
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+    }, {
+        timestamps: false
+    });
+
 
     /* Syncs all tables with the databse */
     sequelize.sync({ force: true });
+
 
     /* Exports the tables so they are accessable for the database-iterface files */
     module.exports = function({}) {
 
         /* Tables to export */
-        const exports = { Mowers }
+        const exports = { Mowers, Positions, Pictures }
         return exports
     }
-
 
 
 } catch (error) {
