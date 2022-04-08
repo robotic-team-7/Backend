@@ -12,10 +12,7 @@ module.exports = function({ mobileRouter }) {
         response.send("Backend is working!")
     })
 
-
     app.use('/mobile', mobileRouter)
-
-
 
     return app
 }
