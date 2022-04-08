@@ -2,19 +2,17 @@
 const { Sequelize, DataTypes } = require('sequelize');
 
 /* Establishes connection with the database */
-const sequelize = new Sequelize('postgres://postgres:moover123@local-db:5432/moover')
+const sequelize = new Sequelize('postgres://postgres:mower123@local-db:5432/mower')
 
 /* Checks if the connection was successful */
-
-
 try {
 
     sequelize.authenticate();
     console.log('Connection has been established successfully.');
 
-    /* Creates table Moovers */
-    const Moovers = sequelize.define('Moovers', {
-        MooverID: {
+    /* Creates table Mowers */
+    const Mowers = sequelize.define('Mowers', {
+        MowerID: {
             primaryKey: true,
             autoIncrement: true,
             type: DataTypes.INTEGER,
@@ -47,7 +45,7 @@ try {
     module.exports = function({}) {
 
         /* Tables to export */
-        const exports = { Moovers }
+        const exports = { Mowers }
         return exports
     }
 

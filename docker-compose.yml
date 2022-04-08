@@ -13,5 +13,5 @@ services:
     ports:
       - 5432:5432
     environment:
-      POSTGRES_DB: moover 
-      POSTGRES_PASSWORD: moover123 
+      POSTGRES_DB: mower 
+      POSTGRES_PASSWORD: mower123 
