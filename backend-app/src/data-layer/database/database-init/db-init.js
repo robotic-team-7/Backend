@@ -46,10 +46,6 @@ try {
             unique: true,
             allowNull: false
         },
-        MooverID: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
         Positions: {
             type: DataTypes.JSON,
             allowNull: false
@@ -79,11 +75,6 @@ try {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        MowerID: {
-            unique: true,
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
         ImageClassification: {
             primaryKey: true,
             type: DataTypes.STRING,
@@ -98,10 +89,17 @@ try {
         timestamps: false
     });
 
+    /* Table relations */
+
+    // Adds MowerID to Pictures table
+    Pictures.belongsTo(Mowers, { foreignKey: 'MowerID', onDelete: 'cascade' })
+
+    // Adds MowerID to Position table
+    Positions.belongsTo(Mowers, { foreignKey: 'MowerID', onDelete: 'cascade' })
+
 
     /* Syncs all tables with the databse */
     sequelize.sync({ force: true });
-
 
     /* Exports the tables so they are accessable for the database-iterface files */
     module.exports = function({}) {
