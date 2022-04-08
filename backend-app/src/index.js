@@ -7,11 +7,11 @@ container.register({
     restRouter: awilix.asFunction(require('./api-layer/rest-router')),
 
     //logic-layer
-    mooverInterface: awilix.asFunction(require('./logic-layer/interfaces/moover-interface')),
+    mowerInterface: awilix.asFunction(require('./logic-layer/interfaces/mower-interface')),
 
     //data-layer
     db: awilix.asFunction(require('./data-layer/database/database-init/db-init')),
-    mooverRepository: awilix.asFunction(require('./data-layer/database/database-access/moover-repository')),
+    mowerRepository: awilix.asFunction(require('./data-layer/database/database-access/mower-repository')),
 
     //app
     app: awilix.asFunction(require('./api-layer/app'))
