@@ -12,7 +12,7 @@ module.exports = function({ db }) {
             SerialNumber: SerialNumber,
             Status: Status,
         }
-        console.log(mower)
+
         db.Mowers.create(mower)
             .then(createdMower => callback([], createdMower.MowerID))
             .catch(e => { callback(e, []) })
