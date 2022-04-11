@@ -16,16 +16,7 @@ module.exports = function({ mowerInterface }) {
              }
          })
      })
-
-     router.post('/start', async function(request, response){ //post or put i dont know yet
-
-     })
-
-     router.post('/stop', async function(request, response){
-
-     })
-    
-    router.get('/:id', function(request, response) {
+      router.get('/:id', function(request, response) {
         const id = request.params.id
         mooverInterface. (id, function(errors, moover) {
             if (errors.length == 0 && moover.length == 0) {
@@ -38,6 +29,20 @@ module.exports = function({ mowerInterface }) {
         })
     })
     */
+
+    router.post('/start', function(request, response) { //post or put i dont know yet
+
+    })
+
+    router.post('/stop', function(request, response) {
+
+    })
+
+    router.get('/positions', function(request, response) {
+
+    })
+
+
 
     router.post('/', function(request, response) {
         const userID = request.body.UserID
