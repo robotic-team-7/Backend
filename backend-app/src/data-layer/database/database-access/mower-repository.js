@@ -12,12 +12,48 @@ module.exports = function({ db }) {
             SerialNumber: SerialNumber,
             Status: Status,
         }
-        console.log(mower)
+
         db.Mowers.create(mower)
             .then(createdMower => callback([], createdMower.MowerID))
             .catch(e => { callback(e, []) })
 
     }
+
+
+
+
+    /* To get mower by MowerID */
+    exports.getMowerByMowerId = function(MowerID, callback) {
+
+        db.Mowers.findOne({
+                where: { MowerID: MowerID },
+                raw: true
+            })
+            .then(mower => callback([], mower))
+            .catch(e => {
+                console.log(e)
+                callback(e, [])
+            })
+
+    }
+
+
+
+    /* To get all mowers by UserID */
+    exports.getAllMowersByUserId = function(UserID, callback) {
+
+        db.Mowers.findAll({
+                where: { UserID: UserID },
+                raw: true
+            })
+            .then(mowers => callback([], mowers))
+            .catch(e => {
+                console.log(e)
+                callback(e, [])
+            })
+
+    }
+
 
 
 
@@ -29,7 +65,7 @@ module.exports = function({ db }) {
                 returning: true,
                 raw: true
             })
-            .then(mower => callback([], mower.Status))
+            .then(mower => callback([], mower[1][0].Status))
             .catch(e => {
                 console.log(e)
                 callback(e, [])

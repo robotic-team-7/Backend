@@ -39,7 +39,7 @@ try {
 
     /* Creates table Positions */
     const Positions = sequelize.define('Positions', {
-        PositionID: {
+        PositionsID: {
             primaryKey: true,
             autoIncrement: true,
             type: DataTypes.INTEGER,
@@ -48,11 +48,6 @@ try {
         },
         Positions: {
             type: DataTypes.JSON,
-            allowNull: false
-        },
-        Status: {
-            primaryKey: true,
-            type: DataTypes.BOOLEAN,
             allowNull: false
         },
     }, {

@@ -15,6 +15,37 @@ module.exports = function({ mowerRepository }) {
     }
 
 
+    /* To get a mower by MowerID */
+    exports.getMowerByMowerId = function(MowerID, callback) {
+
+        mowerRepository.getMowerById(MowerID, function(error, mower) {
+            if (Object.keys(error).length > 0) {
+                callback(error, [])
+            } else {
+                callback([], mower)
+            }
+        })
+
+
+    }
+
+
+
+    /* To get all mowers by UserID */
+    exports.getAllMowersByUserId = function(UserID, callback) {
+
+        mowerRepository.getAllMowersByUserId(UserID, function(error, mowers) {
+            if (Object.keys(error).length > 0) {
+                callback(error, [])
+            } else {
+                callback([], mowers)
+            }
+        })
+
+
+    }
+
+
 
     /* To update mower status */
     exports.updateMowerStatus = function(MowerID, Status, callback) {
