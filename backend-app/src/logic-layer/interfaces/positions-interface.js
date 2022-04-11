@@ -47,6 +47,21 @@ module.exports = function({ positionsRepository }) {
 
 
 
+    /* To get positions by MowerID */
+    exports.getPositionsByMowerId = function(MowerID, callback) {
+
+        positionsRepository.getPositionsByMowerId(MowerID, function(error, positions) {
+            if (Object.keys(error).length > 0) {
+                callback(error, [])
+            } else {
+                callback([], positions)
+            }
+        })
+    }
+
+
+
+
     /* To delete position data */
     exports.deletePositionData = function(PositionsID, callback) {
 

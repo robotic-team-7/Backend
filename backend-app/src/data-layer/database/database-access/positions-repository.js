@@ -41,6 +41,28 @@ module.exports = function({ db }) {
     }
 
 
+
+
+
+
+    /* To get positions by MowerID */
+    exports.getPositionsByMowerId = function(MowerID, callback) {
+
+        db.Positions.findAll({
+                where: { MowerID: MowerID },
+                raw: true
+            })
+            .then(positions => callback([], positions))
+            .catch(e => {
+                console.log(e)
+                callback(e, [])
+            })
+
+    }
+
+
+
+
     /* To add positions */
     exports.addPositions = function(PositionsID, Positions, callback) {
 
