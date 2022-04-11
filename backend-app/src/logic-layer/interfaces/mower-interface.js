@@ -17,6 +17,21 @@ module.exports = function({ mowerRepository }) {
 
 
 
+    exports.getMowerById = function(MowerID, callback) {
+
+        mowerRepository.getMowerById(MowerID, function(error, mower) {
+            if (Object.keys(error).length > 0) {
+                callback(error, [])
+            } else {
+                callback([], mower)
+            }
+        })
+
+
+    }
+
+
+
     /* To update mower status */
     exports.updateMowerStatus = function(MowerID, Status, callback) {
 

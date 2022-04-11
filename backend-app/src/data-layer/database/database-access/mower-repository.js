@@ -21,6 +21,25 @@ module.exports = function({ db }) {
 
 
 
+
+    /* To get mower by MowerID */
+    exports.getMowerById = function(MowerID, callback) {
+
+        db.Mowers.findOne({
+                where: { MowerID: MowerID },
+                raw: true
+            })
+            .then(mower => callback([], mower))
+            .catch(e => {
+                console.log(e)
+                callback(e, [])
+            })
+
+    }
+
+
+
+
     /* To update mower status */
     exports.updateMowerStatus = function(MowerID, Status, callback) {
 
