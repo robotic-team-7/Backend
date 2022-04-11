@@ -13,6 +13,7 @@ container.register({
     //data-layer
     db: awilix.asFunction(require('./data-layer/database/database-init/db-init')),
     mowerRepository: awilix.asFunction(require('./data-layer/database/database-access/mower-repository')),
+    positionsRepository: awilix.asFunction(require('./data-layer/database/database-access/positions-repository')),
 
     //app
     app: awilix.asFunction(require('./api-layer/app'))
