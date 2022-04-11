@@ -59,6 +59,20 @@ module.exports = function({ positionsRepository }) {
         })
     }
 
+    /* To get positions by PositionID */
+    exports.getPositionsByPositionsId = function(PositionsID, callback) {
+
+        positionsRepository.getPositionsByMowerId(PositionsID, function(error, positions) {
+            if (Object.keys(error).length > 0) {
+                callback(error, [])
+            } else {
+                callback([], positions)
+            }
+        })
+
+    }
+
+
 
 
 

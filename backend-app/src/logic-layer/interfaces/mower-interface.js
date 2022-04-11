@@ -18,7 +18,7 @@ module.exports = function({ mowerRepository }) {
     /* To get a mower by MowerID */
     exports.getMowerByMowerId = function(MowerID, callback) {
 
-        mowerRepository.getMowerById(MowerID, function(error, mower) {
+        mowerRepository.getMowerByMowerId(MowerID, function(error, mower) {
             if (Object.keys(error).length > 0) {
                 callback(error, [])
             } else {
