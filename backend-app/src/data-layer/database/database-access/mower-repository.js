@@ -23,13 +23,30 @@ module.exports = function({ db }) {
 
 
     /* To get mower by MowerID */
-    exports.getMowerById = function(MowerID, callback) {
+    exports.getMowerByMowerId = function(MowerID, callback) {
 
         db.Mowers.findOne({
                 where: { MowerID: MowerID },
                 raw: true
             })
             .then(mower => callback([], mower))
+            .catch(e => {
+                console.log(e)
+                callback(e, [])
+            })
+
+    }
+
+
+
+    /* To get all mowers by UserID */
+    exports.getAllMowersByUserId = function(UserID, callback) {
+
+        db.Mowers.findAll({
+                where: { UserID: UserID },
+                raw: true
+            })
+            .then(mowers => callback([], mowers))
             .catch(e => {
                 console.log(e)
                 callback(e, [])
