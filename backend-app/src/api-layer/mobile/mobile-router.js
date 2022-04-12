@@ -6,8 +6,8 @@ module.exports = function({ mowerInterface, positionsInterface }) {
     const router = express.Router()
 
     //Get one specific mower from mower id
-    router.get('/:id', function(request, response) {
-        const mowerId = request.params.id
+    router.get('/:mowerID', function(request, response) {
+        const mowerId = request.params.mowerID
         mowerInterface.getMowerByMowerId(mowerId, function(error, mower) {
             if (error.length == 0 && mower.length == 0) {
                 response.status(404).end()
@@ -20,8 +20,8 @@ module.exports = function({ mowerInterface, positionsInterface }) {
     })
 
     //Get all mowers from user id
-    router.get('/user/:id', function(request, response) {
-        const userID = request.params.id
+    router.get('/user/:userID', function(request, response) {
+        const userID = request.params.userID
         mowerInterface.getAllMowersByUserId(userID, function(errors, mowers) {
             if (errors.length == 0 && mowers.length == 0) {
                 response.status(404).end()
@@ -34,33 +34,19 @@ module.exports = function({ mowerInterface, positionsInterface }) {
     })
 
     //Start the mower
-    router.put('/start/:id', function(request, response) { //post or put i dont know yet
+    router.put('/start/:mowerID', function(request, response) { //post or put i dont know yet
+        const mowerId = request.params.mowerID
 
     })
 
     //Stop the mower
-    router.put('/stop/:id', function(request, response) {
-
-    })
-
-
-    //Get positions from position id
-    router.get('/positions/:id', function(request, response) {
-        const positionsId = request.params.id
-        positionsInterface.getPositionsByPositionsId(positionsId, function(error, positions) {
-            if (error.length == 0 && positions.length == 0) {
-                response.status(404).end()
-            } else if (error.length == 0) {
-                response.status(200).json(positions)
-            } else {
-                response.status(500).json(error)
-            }
-        })
+    router.put('/stop/:mowerID', function(request, response) {
+        const mowerId = request.params.mowerID
     })
 
     //Get positions from mower id
-    router.get('/mowerPositions/:id', function(request, response) {
-        const mowerId = request.params.id
+    router.get('/mowerPositions/:mowerID', function(request, response) {
+        const mowerId = request.params.mowerID
         positionsInterface.getPositionsByMowerId(mowerId, function(error, positions) {
             if (error.length == 0 && positions.length == 0) {
                 response.status(404).end()
@@ -88,9 +74,9 @@ module.exports = function({ mowerInterface, positionsInterface }) {
     })
 
     //Delete a mower
-    router.delete('/:id', function(request, response) {
-        const mowerID = request.params.id
-        mowerInterface.deleteMower(mowerID, function(error, mowerDeleted) {
+    router.delete('/:mowerID', function(request, response) {
+        const mowerId = request.params.mowerID
+        mowerInterface.deleteMower(mowerId, function(error, mowerDeleted) {
             if (error.length == 0 && mowerDeleted) {
                 response.status(204).json()
             } else if (error.length == 0 && !mowerDeleted) {
@@ -102,10 +88,10 @@ module.exports = function({ mowerInterface, positionsInterface }) {
     })
 
     //Update the status for the mower
-    router.put('/:id', function(request, response) {
-        const mowerID = request.params.id
+    router.put('/:mowerID', function(request, response) {
+        const mowerId = request.params.mowerID
         const newStatus = request.body.Status
-        mowerInterface.updateMowerStatus(mowerID, newStatus, function(errors, mower) {
+        mowerInterface.updateMowerStatus(mowerId, newStatus, function(errors, mower) {
             if (errors.length == 0) {
                 response.status(200).json(mower)
             } else {
