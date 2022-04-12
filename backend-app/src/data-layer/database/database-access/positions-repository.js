@@ -10,7 +10,10 @@ module.exports = function({ db }) {
 
         const positionsInstance = {
             MowerID: MowerID,
-            Positions: Positions
+            Positions: {
+                points: Positions
+
+            }
         }
 
         db.Positions.create(positionsInstance)
