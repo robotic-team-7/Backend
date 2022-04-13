@@ -87,6 +87,19 @@ module.exports = function({ mowerInterface, positionsInterface }) {
         })
     })
 
+    router.delete('/:positionsID', function(request, response) {
+        const positionsId = request.params.positionsID
+        mowerInterface.deleteMower(positionsId, function(error, positionDataDeleted) {
+            if (error.length == 0 && positionDataDeleted) {
+                response.status(204).json()
+            } else if (error.length == 0 && !positionDataDeleted) {
+                response.status(404).json()
+            } else {
+                response.status(500).json(error)
+            }
+        })
+    })
+
     //Update the status for the mower
     router.put('/:mowerID', function(request, response) {
         const mowerId = request.params.mowerID
