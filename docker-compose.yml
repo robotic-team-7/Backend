@@ -6,3 +6,12 @@ services:
       - 8080:8080
     volumes:
       - ./backend-app/src:/backend-app/src/
+    depends_on:
+      - local-db
+  local-db:
+    build: ./local-db
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: mower 
+      POSTGRES_PASSWORD: mower123 
