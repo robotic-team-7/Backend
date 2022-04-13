@@ -6,25 +6,27 @@ module.exports = function({ mowerInterface }) {
 
     const router = express.Router()
 
-    /* Retrieve list of all Mowers */
-    router.get('/', function(req, res) {
-
-
-        res.send("Here there should be a list of all Mowers!")
-
-    })
-
-    /* Retrieve Mower information */
+    /* Retrieve Mower by MowerID */
     router.get('/:MowerID', function(req, res) {
 
         let MowerID = req.params.MowerID
 
         /* Call mowerInterface to get Mower by MowerID*/
-        
-        /* Waiting for this to be implemented in mowerInterface */
+        mowerInterface.getMowerById(MowerID, function(error, Mower) {
 
-        res.send("Here there should eventually be some information about Mower with ID "+MowerID)
+            res.send(Mower)
+        })
+    })
 
+    /* Retrieve all Mowers by UserID */
+    router.get('/:UserID', function(req, res) {
+
+        let UserID = req.params.UserID
+
+        mowerInterface.getAllmMowersByUserId(UserID, function(error, Mowers) {
+
+            res.send(Mowers)
+        })
     })
 
     /* Create new Mower */
@@ -35,10 +37,10 @@ module.exports = function({ mowerInterface }) {
         let Status = req.body.Status
 
         /* Call mowerInterface to create new Mower */
-        mowerInterface.createMower(UserID, SerialNumber, Status, function(errors, MowerID) {
+        mowerInterface.createMower(UserID, SerialNumber, Status, function(error, MowerID) {
 
-            if (errors) {
-                res.send(errors)
+            if (error) {
+                res.send(error)
             }
             else {
                 res.redirect('/mowers/'+MowerID)
@@ -53,10 +55,10 @@ module.exports = function({ mowerInterface }) {
         let Status = req.body.Status
 
         /* Call mowerInterface to update Mower Status */
-        mowerInterface.updateMowerStatus(MowerID, Status, function(errors, newMowerStatus) {
+        mowerInterface.updateMowerStatus(MowerID, Status, function(error, newMowerStatus) {
 
-            if (errors) {
-                res.send(errors)
+            if (error) {
+                res.send(error)
             }
             else {
                 res.send(newMowerStatus)
@@ -70,9 +72,9 @@ module.exports = function({ mowerInterface }) {
         let MowerID = req.params.MowerID
 
         /* Call mowerInterface to delete Mower */
-        mowerInterface.deleteMower(MowerID, function(errors, mowerDeleted) {
-            if (errors) {
-                res.send(errors)
+        mowerInterface.deleteMower(MowerID, function(error, mowerDeleted) {
+            if (error) {
+                res.send(error)
             }
             else {
                 res.send(mowerDeleted)
