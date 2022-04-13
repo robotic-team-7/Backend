@@ -7,27 +7,76 @@ module.exports = function({ db }) {
     /* To create positions instance */
     exports.createPositionsInstance = function(Positions, MowerID, callback) {
 
+
         const positionsInstance = {
             MowerID: MowerID,
-            Positions: Positions,
+            Positions: {
+                points: Positions
+
+            }
         }
+
         db.Positions.create(positionsInstance)
             .then(createdPositionsInstance => callback([], createdPositionsInstance.PositionsID))
-            .catch(e => { callback(e, []) })
+            .catch(e => {
+                console.log(e)
+                callback(e, [])
+
+            })
 
     }
 
 
 
-    /* To add positions */
-    exports.addPositions = function(MowerID, Positions, callback) {
+    /* To get positions by PositionID */
+    exports.getPositionsByPositionsId = function(PositionsID, callback) {
 
-        db.Positions.update({ Positions: Positions }, {
+        db.Positions.findOne({
+                where: { PositionsID: PositionsID },
+                raw: true
+            })
+            .then(positions => callback([], positions.Positions))
+            .catch(e => {
+                console.log(e)
+                callback(e, [])
+            })
+
+    }
+
+
+
+
+
+
+    /* To get positions by MowerID */
+    exports.getPositionsByMowerId = function(MowerID, callback) {
+
+        db.Positions.findAll({
                 where: { MowerID: MowerID },
+                raw: true
+            })
+            .then(positions => callback([], positions))
+            .catch(e => {
+                console.log(e)
+                callback(e, [])
+            })
+
+    }
+
+
+
+
+    /* To add positions */
+    exports.addPositions = function(PositionsID, Positions, callback) {
+
+        db.Positions.update({
+                Positions: Positions
+            }, {
+                where: { PositionsID: PositionsID },
                 returning: true,
                 raw: true
             })
-            .then(callback([], "New positions added"))
+            .then(updatedPositions => callback([], updatedPositions[1][0].Positions))
             .catch(e => {
                 console.log(e)
                 callback(e, [])

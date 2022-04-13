@@ -50,11 +50,6 @@ try {
             type: DataTypes.JSON,
             allowNull: false
         },
-        Status: {
-            primaryKey: true,
-            type: DataTypes.BOOLEAN,
-            allowNull: false
-        },
     }, {
         timestamps: true,
         createdAt: true,

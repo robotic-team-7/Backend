@@ -5,30 +5,60 @@ module.exports = function({ positionsRepository }) {
     /* To create positions instance */
     exports.createPositionsInstance = function(Positions, MowerID, callback) {
 
-        positionsRepository.createPositionsInstance(Positions, MowerID, function(error, MowerID) {
+        positionsRepository.createPositionsInstance(Positions, MowerID, function(error, positionsId) {
+
+
             if (Object.keys(error).length > 0) {
                 callback(error, [])
             } else {
-                callback([], positionsID)
+                callback([], positionsId)
             }
         })
 
     }
+
+
 
 
 
     /* To add positions */
-    exports.addPositions = function(MowerID, Positions, callback) {
+    exports.addPositions = function(PositionID, newPositions, callback) {
 
-        positionsRepository.addPositions(MowerID, Positions, function(error, message) {
+        positionsRepository.getPositionsByPositionsId(PositionID, function(error, positions) {
             if (Object.keys(error).length > 0) {
                 callback(error, [])
             } else {
-                callback([], message)
+
+                if (Object.keys(positions).length > 0) {
+                    //add check for right data type [[52.289,83.894]]
+                    positions.points = positions.points.concat(newPositions)
+                }
+                positionsRepository.addPositions(PositionID, positions, function(error, positions) {
+                    if (Object.keys(error).length > 0) {
+                        callback(error, [])
+                    } else {
+                        callback([], positions)
+                    }
+                })
             }
         })
-
     }
+
+
+
+
+    /* To get positions by MowerID */
+    exports.getPositionsByMowerId = function(MowerID, callback) {
+
+        positionsRepository.getPositionsByMowerId(MowerID, function(error, positions) {
+            if (Object.keys(error).length > 0) {
+                callback(error, [])
+            } else {
+                callback([], positions)
+            }
+        })
+    }
+
 
 
 
