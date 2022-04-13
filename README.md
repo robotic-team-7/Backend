@@ -1,6 +1,6 @@
 # The Mower Backend 
 
-The mower backend is a backend application is a communication link between the mower and the mobile application for reading and writing data.
+The mower backend is a backend application which is a communication link between the mower and the mobile application for reading and writing data.
 
 ## Tech
 
