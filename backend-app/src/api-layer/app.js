@@ -3,7 +3,7 @@ const app = express()
 
 
 
-module.exports = function({ restRouter, mowerRouter, imageRouter, positionRouter }) {
+module.exports = function({ restRouter, mowerRouter, imageRouter, positionsRouter }) {
 
     app.get("/", function(request, response) {
 
@@ -15,7 +15,7 @@ module.exports = function({ restRouter, mowerRouter, imageRouter, positionRouter
     app.use('/rest', restRouter)
     app.use('/mowers', mowerRouter)
     app.use('/images', imageRouter)
-    app.use('/positions', positionRouter)
+    app.use('/positions', positionsRouter)
 
     let bodyParser = require('body-parser')
     app.use(bodyParser.urlencoded({ extended: false }))
