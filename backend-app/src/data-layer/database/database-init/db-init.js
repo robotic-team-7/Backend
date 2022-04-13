@@ -94,7 +94,24 @@ try {
 
 
     /* Syncs all tables with the databse */
-    sequelize.sync({ force: true });
+    sequelize.sync({ force: true }).then(function() {
+
+        Mowers.create({
+            UserID: 1,
+            SerialNumber: "abc123",
+            Status: false
+        })
+        Positions.create({
+            MowerID: 1,
+            Positions: {
+                points: [
+                    [53.33, 44.33],
+                    [66.44, 56.77]
+                ]
+
+            }
+        })
+    })
 
     /* Exports the tables so they are accessable for the database-iterface files */
     module.exports = function({}) {
