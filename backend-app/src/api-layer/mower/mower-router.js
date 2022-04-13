@@ -7,55 +7,55 @@ module.exports = function({ mowerInterface }) {
     const router = express.Router()
 
     /* Retrieve Mower by MowerID */
-    router.get('/:MowerID', function(req, res) {
+    router.get('/:mowerId', function(req, res) {
 
-        let MowerID = req.params.MowerID
+        let MowerID = req.params.mowerId
 
-        /* Call mowerInterface to get Mower by MowerID*/
-        mowerInterface.getMowerById(MowerID, function(error, Mower) {
+        /* Call mowerInterface to get mower by mowerId*/
+        mowerInterface.getMowerById(mowerId, function(error, mower) {
 
-            res.send(Mower)
+            res.send(mower)
         })
     })
 
-    /* Retrieve all Mowers by UserID */
-    router.get('/:UserID', function(req, res) {
+    /* Retrieve all mowers by userId */
+    router.get('/:userId', function(req, res) {
 
-        let UserID = req.params.UserID
+        let userId = req.params.userId
 
-        mowerInterface.getAllmMowersByUserId(UserID, function(error, Mowers) {
+        mowerInterface.getAllmMowersByUserId(userId, function(error, mowers) {
 
-            res.send(Mowers)
+            res.send(mowers)
         })
     })
 
-    /* Create new Mower */
+    /* Create new mower */
     router.post('/', function(req, res) {
 
-        let UserID = req.body.UserID
-        let SerialNumber = req.body.SerialNumber
-        let Status = req.body.Status
+        let userID = req.body.userId
+        let serialNumber = req.body.serialNumber
+        let status = req.body.status
 
-        /* Call mowerInterface to create new Mower */
-        mowerInterface.createMower(UserID, SerialNumber, Status, function(error, MowerID) {
+        /* Call mowerInterface to create new mower */
+        mowerInterface.createMower(userId, serialNumber, status, function(error, mowerId) {
 
             if (error) {
                 res.send(error)
             }
             else {
-                res.redirect('/mowers/'+MowerID)
+                res.redirect('/mowers/'+mowerId)
             }
         })
     })
 
-    /* Update Mower Status */
-    router.put('/:MowerID', function(req, res) {
+    /* Update mower status */
+    router.put('/:mowerId', function(req, res) {
 
-        let MowerID = req.params.MowerID
-        let Status = req.body.Status
+        let mowerId = req.params.mowerId
+        let status = req.body.status
 
-        /* Call mowerInterface to update Mower Status */
-        mowerInterface.updateMowerStatus(MowerID, Status, function(error, newMowerStatus) {
+        /* Call mowerInterface to update mower status */
+        mowerInterface.updateMowerStatus(mowerId, status, function(error, newMowerStatus) {
 
             if (error) {
                 res.send(error)
@@ -66,13 +66,13 @@ module.exports = function({ mowerInterface }) {
         })
     })
 
-    /* Delete Mower */
-    router.delete('/:MowerID', function(req, res) {
+    /* Delete mower */
+    router.delete('/:mowerId', function(req, res) {
 
-        let MowerID = req.params.MowerID
+        let mowerId = req.params.mowerId
 
-        /* Call mowerInterface to delete Mower */
-        mowerInterface.deleteMower(MowerID, function(error, mowerDeleted) {
+        /* Call mowerInterface to delete mower */
+        mowerInterface.deleteMower(mowerId, function(error, mowerDeleted) {
             if (error) {
                 res.send(error)
             }
