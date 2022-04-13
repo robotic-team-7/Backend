@@ -3,22 +3,22 @@ module.exports = function({ mowerRepository }) {
     const exports = {}
 
     /* To create a mower */
-    exports.createMower = function(UserID, SerialNumber, Status, callback) {
+    exports.createMower = function(userId, serialNumber, status, callback) {
 
-        mowerRepository.createMower(UserID, SerialNumber, Status, function(error, MowerID) {
+        mowerRepository.createMower(userId, serialNumber, status, function(error, MowerID) {
             if (Object.keys(error).length > 0) {
                 callback(error, [])
             } else {
-                callback([], MowerID)
+                callback([], mowerId)
             }
         })
     }
 
 
-    /* To get a mower by MowerID */
-    exports.getMowerByMowerId = function(MowerID, callback) {
+    /* To get a mower by mowerId */
+    exports.getMowerByMowerId = function(mowerId, callback) {
 
-        mowerRepository.getMowerByMowerId(MowerID, function(error, mower) {
+        mowerRepository.getMowerById(mowerId, function(error, mower) {
             if (Object.keys(error).length > 0) {
                 callback(error, [])
             } else {
@@ -31,10 +31,10 @@ module.exports = function({ mowerRepository }) {
 
 
 
-    /* To get all mowers by UserID */
-    exports.getAllMowersByUserId = function(UserID, callback) {
+    /* To get all mowers by userId */
+    exports.getAllMowersByUserId = function(userId, callback) {
 
-        mowerRepository.getAllMowersByUserId(UserID, function(error, mowers) {
+        mowerRepository.getAllMowersByUserId(userId, function(error, mowers) {
             if (Object.keys(error).length > 0) {
                 callback(error, [])
             } else {
@@ -48,9 +48,9 @@ module.exports = function({ mowerRepository }) {
 
 
     /* To update mower status */
-    exports.updateMowerStatus = function(MowerID, Status, callback) {
+    exports.updateMowerStatus = function(mowerId, status, callback) {
 
-        mowerRepository.updateMowerStatus(MowerID, Status, function(error, newMowerStaus) {
+        mowerRepository.updateMowerStatus(mowerId, status, function(error, newMowerStaus) {
             if (Object.keys(error).length > 0) {
                 callback(error, [])
             } else {
@@ -63,9 +63,9 @@ module.exports = function({ mowerRepository }) {
 
 
     /* To delete a mower */
-    exports.deleteMower = function(MowerID, callback) {
+    exports.deleteMower = function(mowerId, callback) {
 
-        mowerRepository.deleteMower(MowerID, function(error, mowerDeleted) {
+        mowerRepository.deleteMower(mowerId, function(error, mowerDeleted) {
             if (Object.keys(error).length > 0) {
                 callback(error, [])
             } else {
