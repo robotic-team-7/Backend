@@ -12,23 +12,23 @@ try {
 
     /* Creates table Mowers */
     const Mowers = sequelize.define('Mowers', {
-        MowerID: {
+        mowerId: {
             primaryKey: true,
             autoIncrement: true,
             type: DataTypes.INTEGER,
             unique: true,
             allowNull: false
         },
-        UserID: {
+        userId: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        SerialNumber: {
+        serialNumber: {
             unique: true,
             type: DataTypes.STRING,
             allowNull: false
         },
-        Status: {
+        status: {
             primaryKey: true,
             type: DataTypes.BOOLEAN,
             allowNull: false
@@ -39,14 +39,14 @@ try {
 
     /* Creates table Positions */
     const Positions = sequelize.define('Positions', {
-        PositionsID: {
+        positionsId: {
             primaryKey: true,
             autoIncrement: true,
             type: DataTypes.INTEGER,
             unique: true,
             allowNull: false
         },
-        Positions: {
+        positions: {
             type: DataTypes.JSON,
             allowNull: false
         },
@@ -59,23 +59,23 @@ try {
 
     /* Creates table Pictures */
     const Pictures = sequelize.define('Pictures', {
-        PictureID: {
+        pictureId: {
             primaryKey: true,
             autoIncrement: true,
             type: DataTypes.INTEGER,
             unique: true,
             allowNull: false
         },
-        UserID: {
+        userId: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        ImageClassification: {
+        imageClassification: {
             primaryKey: true,
             type: DataTypes.STRING,
             allowNull: false
         },
-        Path: {
+        path: {
             primaryKey: true,
             type: DataTypes.STRING,
             allowNull: false
@@ -86,24 +86,24 @@ try {
 
     /* Table relations */
 
-    // Adds MowerID to Pictures table
-    Pictures.belongsTo(Mowers, { foreignKey: 'MowerID', onDelete: 'cascade' })
+    // Adds mowerId to Pictures table
+    Pictures.belongsTo(Mowers, { foreignKey: 'mowerId', onDelete: 'cascade' })
 
-    // Adds MowerID to Position table
-    Positions.belongsTo(Mowers, { foreignKey: 'MowerID', onDelete: 'cascade' })
+    // Adds mowerId to Position table
+    Positions.belongsTo(Mowers, { foreignKey: 'mowerId', onDelete: 'cascade' })
 
 
     /* Syncs all tables with the databse */
     sequelize.sync({ force: true }).then(function() {
 
         Mowers.create({
-            UserID: 1,
-            SerialNumber: "abc123",
-            Status: false
+            userId: 1,
+            serialNumber: "abc123",
+            status: false
         })
         Positions.create({
-            MowerID: 1,
-            Positions: {
+            mowerID: 1,
+            positions: {
                 points: [
                     [53.33, 44.33],
                     [66.44, 56.77]

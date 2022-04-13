@@ -3,9 +3,9 @@ module.exports = function({ positionsRepository }) {
     const exports = {}
 
     /* To create positions instance */
-    exports.createPositionsInstance = function(Positions, MowerID, callback) {
+    exports.createPositionsInstance = function(positions, mowerId, callback) {
 
-        positionsRepository.createPositionsInstance(Positions, MowerID, function(error, positionsId) {
+        positionsRepository.createPositionsInstance(positions, mowerId, function(error, positionsId) {
 
 
             if (Object.keys(error).length > 0) {
@@ -22,9 +22,9 @@ module.exports = function({ positionsRepository }) {
 
 
     /* To add positions */
-    exports.addPositions = function(PositionID, newPositions, callback) {
+    exports.addPositions = function(positionId, newPositions, callback) {
 
-        positionsRepository.getPositionsByPositionsId(PositionID, function(error, positions) {
+        positionsRepository.getPositionsByPositionsId(positionId, function(error, positions) {
             if (Object.keys(error).length > 0) {
                 callback(error, [])
             } else {
@@ -33,7 +33,7 @@ module.exports = function({ positionsRepository }) {
                     //add check for right data type [[52.289,83.894]]
                     positions.points = positions.points.concat(newPositions)
                 }
-                positionsRepository.addPositions(PositionID, positions, function(error, positions) {
+                positionsRepository.addPositions(positionId, positions, function(error, positions) {
                     if (Object.keys(error).length > 0) {
                         callback(error, [])
                     } else {
@@ -47,10 +47,11 @@ module.exports = function({ positionsRepository }) {
 
 
 
-    /* To get positions by MowerID */
-    exports.getPositionsByMowerId = function(MowerID, callback) {
 
-        positionsRepository.getPositionsByMowerId(MowerID, function(error, positions) {
+    /* To get positions by mowerId */
+    exports.getPositionsByMowerId = function(mowerId, callback) {
+
+        positionsRepository.getPositionsByMowerId(mowerId, function(error, positions) {
             if (Object.keys(error).length > 0) {
                 callback(error, [])
             } else {
@@ -62,10 +63,11 @@ module.exports = function({ positionsRepository }) {
 
 
 
-    /* To delete position data */
-    exports.deletePositionData = function(PositionsID, callback) {
 
-        positionsRepository.deletePositionData(PositionsID, function(error, positionDataDeleted) {
+    /* To delete position data */
+    exports.deletePositionData = function(positionsId, callback) {
+
+        positionsRepository.deletePositionData(positionsId, function(error, positionDataDeleted) {
             if (Object.keys(error).length > 0) {
                 callback(error, [])
             } else {

@@ -5,16 +5,16 @@ module.exports = function({ db }) {
     const exports = {}
 
     /* To create a mower */
-    exports.createMower = function(UserID, SerialNumber, Status, callback) {
+    exports.createMower = function(userId, serialNumber, status, callback) {
 
         const mower = {
-            UserID: UserID,
-            SerialNumber: SerialNumber,
-            Status: Status,
+            userId: userId,
+            serialNumber: serialNumber,
+            status: status,
         }
 
         db.Mowers.create(mower)
-            .then(createdMower => callback([], createdMower.MowerID))
+            .then(createdMower => callback([], createdMower.mowerId))
             .catch(e => { callback(e, []) })
 
     }
@@ -23,10 +23,10 @@ module.exports = function({ db }) {
 
 
     /* To get mower by MowerID */
-    exports.getMowerByMowerId = function(MowerID, callback) {
+    exports.getMowerByMowerId = function(mowerId, callback) {
 
         db.Mowers.findOne({
-                where: { MowerID: MowerID },
+                where: { mowerId: mowerId },
                 raw: true
             })
             .then(mower => callback([], mower))
@@ -40,10 +40,10 @@ module.exports = function({ db }) {
 
 
     /* To get all mowers by UserID */
-    exports.getAllMowersByUserId = function(UserID, callback) {
+    exports.getAllMowersByUserId = function(userId, callback) {
 
         db.Mowers.findAll({
-                where: { UserID: UserID },
+                where: { userId: userId },
                 raw: true
             })
             .then(mowers => callback([], mowers))
@@ -58,14 +58,14 @@ module.exports = function({ db }) {
 
 
     /* To update mower status */
-    exports.updateMowerStatus = function(MowerID, Status, callback) {
+    exports.updateMowerStatus = function(mowerId, status, callback) {
 
-        db.Mowers.update({ Status: Status }, {
-                where: { MowerID: MowerID },
+        db.Mowers.update({ status: status }, {
+                where: { mowerId: mowerId },
                 returning: true,
                 raw: true
             })
-            .then(mower => callback([], mower[1][0].Status))
+            .then(mower => callback([], mower[1][0].status))
             .catch(e => {
                 console.log(e)
                 callback(e, [])
@@ -76,10 +76,10 @@ module.exports = function({ db }) {
 
 
     /* To delete a mower */
-    exports.deleteMower = function(MowerID, callback) {
+    exports.deleteMower = function(mowerId, callback) {
 
         db.Mowers.destroy({
-                where: { MowerID: MowerID },
+                where: { mowerId: mowerId },
                 raw: true
             })
             .then(numberOfDeletedMowers => {
