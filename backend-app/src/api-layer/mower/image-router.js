@@ -15,9 +15,9 @@ module.exports = function({ mowerInterface }) {
     })
 
     /* Retrieve an image by ImageID */
-    router.get('/ImageID', function(req, res) {
+    router.get('/imageId', function(req, res) {
 
-        let ImageID = req.params.ImageID
+        let imageId = req.params.imageId
 
         res.send("Image goes here...")
     })

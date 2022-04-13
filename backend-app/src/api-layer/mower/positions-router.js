@@ -9,10 +9,10 @@ module.exports = function({ positionsInterface }) {
     /* Create new Positions Instance */
     router.post('/create-instance', function(req, res) {
 
-        let Positions = req.body.Positions
-        let MowerID = req.body.MowerID
+        let positions = req.body.positions
+        let mowerId = req.body.mowerID
         
-        positionsInterface.createPositionsInstance(Positions, MowerID, function (error, positionsId) {
+        positionsInterface.createPositionsInstance(positions, mowerId, function (error, positionsId) {
 
             if (error) {
                 res.send(error)
@@ -23,7 +23,7 @@ module.exports = function({ positionsInterface }) {
         })
     })
 
-    /* Add new Positions to Positions Instance */
+    /* Add new positions to positions instance */
     router.post('/add', function(req, res) {
 
         let positionsId = req.body.positionsId
