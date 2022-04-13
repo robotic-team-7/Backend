@@ -5,6 +5,9 @@ container.register({
 
     //api-layer
     restRouter: awilix.asFunction(require('./api-layer/rest-router')),
+    mowerRouter: awilix.asFunction(require('./api-layer/mower/mower-router')),
+    imageRouter: awilix.asFunction(require('./api-layer/mower/image-router')),
+    positionsRouter: awilix.asFunction(require('./api-layer/mower/positions-router')),
 
     //logic-layer
     mowerInterface: awilix.asFunction(require('./logic-layer/interfaces/mower-interface')),
