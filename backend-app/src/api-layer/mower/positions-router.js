@@ -1,26 +1,75 @@
 /* Positions router */
 
-/* Note: We're currently considering a MowingSession object,
-which would store lots and lots of positions in a list.
-Can't implement this router further until we know for sure. */
-
 const express = require("express")
 
-module.exports = function({ mowerInterface }) {
+module.exports = function({ positionsInterface }) {
 
     const router = express.Router()
 
-    /* Retrieve all positions */
-    router.get('/', function(req, res) {
+    /* Create new Positions Instance */
+    router.post('/create-instance', function(req, res) {
 
-        res.send("Positions page!")
+        let Positions = req.body.Positions
+        let MowerID = req.body.MowerID
+        
+        positionsInterface.createPositionsInstance(Positions, MowerID, function (error, positionsId) {
 
+            if (error) {
+                res.send(error)
+            }
+            else {
+                res.send(positionsId)
+            }
+        })
     })
 
-    /* Create Positions instance */
-    router.post('/', function(req, res) {
+    /* Add new Positions to Positions Instance */
+    router.post('/add', function(req, res) {
 
-        return
+        let positionsId = req.body.positionsId
+        let newPositions = req.body.newPositions
+
+        positionsInterface.addPositions(positionsId, newPositions, function(error, positions) {
+
+            if (error) {
+                res.send(error)
+            }
+            else {
+                res.send(positions)
+            }
+        })
+    })
+
+    /* Retrieve positions by mowerId */
+    router.get('/:mowerId', function(req, res) {
+
+        let mowerId = req.params.mowerId
+
+        positionsInterface.getPositionsByMowerId(mowerId, function(error, positions) {
+
+            if (error) {
+                res.send(error)
+            }
+            else {
+                res.send(positions)
+            }
+        })
+    })
+
+    /* Delete positions by positionsId */
+    router.delete('/:positionsId', function(req, res) {
+
+        let positionsId = req.params.positionsId
+
+        positionsInterface.deletePositionData(positionsId, function(error, positionDataDeleted) {
+
+            if (error) {
+                res.send(error)
+            }
+            else {
+                res.send(positionDataDeleted)
+            }
+        })
     })
 
     return router
