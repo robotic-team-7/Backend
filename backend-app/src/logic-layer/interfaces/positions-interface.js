@@ -3,9 +3,9 @@ module.exports = function({ positionsRepository }) {
     const exports = {}
 
     /* To create positions instance */
-    exports.createPositionsInstance = function(positions, mowerId, callback) {
+    exports.createPositionsInstance = function(mowerPositions, mowerId, callback) {
 
-        positionsRepository.createPositionsInstance(positions, mowerId, function(error, positionsId) {
+        positionsRepository.createPositionsInstance(mowerPositions, mowerId, function(error, positionsId) {
 
 
             if (Object.keys(error).length > 0) {
@@ -21,23 +21,23 @@ module.exports = function({ positionsRepository }) {
 
 
 
-    /* To add positions */
-    exports.addPositions = function(positionId, newPositions, callback) {
+    /* To add mowerPositions */
+    exports.addMowerPositions = function(positionId, newMowerPositions, callback) {
 
-        positionsRepository.getPositionsByPositionsId(positionId, function(error, positions) {
+        positionsRepository.getMowerPositionsByPositionsId(positionId, function(error, mowerPositions) {
             if (Object.keys(error).length > 0) {
                 callback(error, [])
             } else {
 
-                if (Object.keys(positions).length > 0) {
+                if (Object.keys(mowerPositions).length > 0) {
                     //add check for right data type [[52.289,83.894]]
-                    positions.points = positions.points.concat(newPositions)
+                    mowerPositions.points = mowerPositions.points.concat(newMowerPositions)
                 }
-                positionsRepository.addPositions(positionId, positions, function(error, positions) {
+                positionsRepository.addMowerPositions(positionId, mowerPositions, function(error, mowerPositions) {
                     if (Object.keys(error).length > 0) {
                         callback(error, [])
                     } else {
-                        callback([], positions)
+                        callback([], mowerPositions)
                     }
                 })
             }
@@ -48,14 +48,14 @@ module.exports = function({ positionsRepository }) {
 
 
 
-    /* To get positions by mowerId */
-    exports.getPositionsByMowerId = function(mowerId, callback) {
+    /* To get mowerPositions by mowerId */
+    exports.getMowerPositionsByMowerId = function(mowerId, callback) {
 
-        positionsRepository.getPositionsByMowerId(mowerId, function(error, positions) {
+        positionsRepository.getMowerPositionsByMowerId(mowerId, function(error, mowerPositions) {
             if (Object.keys(error).length > 0) {
                 callback(error, [])
             } else {
-                callback([], positions)
+                callback([], mowerPositions)
             }
         })
     }

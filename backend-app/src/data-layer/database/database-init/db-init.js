@@ -46,7 +46,7 @@ try {
             unique: true,
             allowNull: false
         },
-        positions: {
+        mowerPositions: {
             type: DataTypes.JSON,
             allowNull: false
         },
@@ -57,28 +57,26 @@ try {
         deletedAt: false,
     });
 
-    /* Creates table Pictures */
-    const Pictures = sequelize.define('Pictures', {
-        pictureId: {
+    /* Creates table Obstacles */
+    const Obstacles = sequelize.define('Obstacles', {
+        obstacleId: {
             primaryKey: true,
             autoIncrement: true,
             type: DataTypes.INTEGER,
             unique: true,
             allowNull: false
         },
-        userId: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
         imageClassification: {
-            primaryKey: true,
             type: DataTypes.STRING,
+            allowNull: true
+        },
+        ObstaclePosition: {
+            type: DataTypes.JSON,
             allowNull: false
         },
-        path: {
-            primaryKey: true,
+        imagePath: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
     }, {
         timestamps: false
@@ -86,8 +84,8 @@ try {
 
     /* Table relations */
 
-    // Adds mowerId to Pictures table
-    Pictures.belongsTo(Mowers, { foreignKey: 'mowerId', onDelete: 'cascade' })
+    // Adds mowerId to Obstacles table
+    Obstacles.belongsTo(Mowers, { foreignKey: 'mowerId', onDelete: 'cascade' })
 
     // Adds mowerId to Position table
     Positions.belongsTo(Mowers, { foreignKey: 'mowerId', onDelete: 'cascade' })
@@ -103,7 +101,7 @@ try {
         })
         Positions.create({
             mowerID: 1,
-            positions: {
+            mowerPositions: {
                 points: [
                     [53.33, 44.33],
                     [66.44, 56.77]
@@ -117,7 +115,7 @@ try {
     module.exports = function({}) {
 
         /* Tables to export */
-        const exports = { Mowers, Positions, Pictures }
+        const exports = { Mowers, Positions, Obstacles }
         return exports
     }
 

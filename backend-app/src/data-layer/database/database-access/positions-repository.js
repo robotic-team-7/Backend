@@ -5,13 +5,13 @@ module.exports = function({ db }) {
     const exports = {}
 
     /* To create positions instance */
-    exports.createPositionsInstance = function(positions, mowerId, callback) {
+    exports.createPositionsInstance = function(mowerPositions, mowerId, callback) {
 
 
         const positionsInstance = {
             mowerId: mowerId,
-            positions: {
-                points: positions
+            mowerPositions: {
+                points: mowerPositions
 
             }
         }
@@ -28,14 +28,14 @@ module.exports = function({ db }) {
 
 
 
-    /* To get positions by positionId */
-    exports.getPositionsByPositionsId = function(positionsId, callback) {
+    /* To get mowerPositions by positionsId */
+    exports.getMowerPositionsByPositionsId = function(positionsId, callback) {
 
         db.Positions.findOne({
                 where: { positionsId: positionsId },
                 raw: true
             })
-            .then(positions => callback([], positions.positions))
+            .then(positions => callback([], positions.mowerPositions))
             .catch(e => {
                 console.log(e)
                 callback(e, [])
@@ -48,14 +48,14 @@ module.exports = function({ db }) {
 
 
 
-    /* To get positions by mowerId */
-    exports.getPositionsByMowerId = function(mowerId, callback) {
+    /* To get mowerPositions by mowerId */
+    exports.getMowerPositionsByMowerId = function(mowerId, callback) {
 
         db.Positions.findAll({
                 where: { mowerId: mowerId },
                 raw: true
             })
-            .then(positions => callback([], positions))
+            .then(mowerPositions => callback([], mowerPositions))
             .catch(e => {
                 console.log(e)
                 callback(e, [])
@@ -66,17 +66,17 @@ module.exports = function({ db }) {
 
 
 
-    /* To add positions */
-    exports.addPositions = function(positionsId, positions, callback) {
+    /* To add mowerPositions */
+    exports.addMowerPositions = function(positionsId, mowerPositions, callback) {
 
         db.Positions.update({
-                positions: positions
+                mowerPositions: mowerPositions
             }, {
                 where: { positionsId: positionsId },
                 returning: true,
                 raw: true
             })
-            .then(updatedPositions => callback([], updatedPositions[1][0].positions))
+            .then(updatedMowerPositions => callback([], updatedMowerPositions[1][0].mowerPositions))
             .catch(e => {
                 console.log(e)
                 callback(e, [])
@@ -86,7 +86,7 @@ module.exports = function({ db }) {
 
 
 
-    /* To delete position data */
+    /* To delete positions instance */
     exports.deletePositionData = function(positionsId, callback) {
 
         db.Positions.destroy({
