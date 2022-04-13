@@ -22,7 +22,7 @@ module.exports = function({ db }) {
 
 
 
-    /* To get mower by MowerID */
+    /* To get mower by mowerId */
     exports.getMowerByMowerId = function(mowerId, callback) {
 
         db.Mowers.findOne({
@@ -39,7 +39,7 @@ module.exports = function({ db }) {
 
 
 
-    /* To get all mowers by UserID */
+    /* To get all mowers by userId */
     exports.getAllMowersByUserId = function(userId, callback) {
 
         db.Mowers.findAll({
