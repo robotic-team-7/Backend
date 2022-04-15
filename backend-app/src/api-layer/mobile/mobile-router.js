@@ -47,7 +47,7 @@ module.exports = function({ mowerInterface, positionsInterface }) {
     //Get positions from mower id
     router.get('/mowerPositions/:mowerID', function(request, response) {
         const mowerId = request.params.mowerID
-        positionsInterface.getPositionsByMowerId(mowerId, function(error, positions) {
+        positionsInterface.getMowerPositionsByMowerId(mowerId, function(error, positions) {
             if (error.length == 0 && positions.length == 0) {
                 response.status(404).end()
             } else if (error.length == 0) {

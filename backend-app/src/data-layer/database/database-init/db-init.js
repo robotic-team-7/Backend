@@ -100,7 +100,7 @@ try {
             status: false
         })
         Positions.create({
-            mowerID: 1,
+            mowerId: 1,
             mowerPositions: {
                 points: [
                     [53.33, 44.33],
