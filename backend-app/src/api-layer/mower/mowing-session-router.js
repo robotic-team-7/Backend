@@ -12,12 +12,12 @@ module.exports = function({ mowerSessionInterface }) {
         let mowerPositions = req.body.mowerPositions
         let mowerId = req.body.mowerID
 
-        mowerSessionInterface.createMowerSession(mowerPositions, mowerId, function(error, mowerSessionId) {
+        mowerSessionInterface.createMowerSession(mowerPositions, mowerId, function(error, mowingSessionId) {
 
             if (error) {
                 res.send(error)
             } else {
-                res.send(mowerSessionId)
+                res.send(mowingSessionId)
             }
         })
     })
