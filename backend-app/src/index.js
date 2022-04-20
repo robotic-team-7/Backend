@@ -12,6 +12,8 @@ container.register({
     //logic-layer
     mowerInterface: awilix.asFunction(require('./logic-layer/interfaces/mower-interface')),
     mowerSessionInterface: awilix.asFunction(require('./logic-layer/interfaces/mowing-session-interface')),
+    dbError: awilix.asFunction(require('./logic-layer/error-handling/db-error')),
+
 
     //data-layer
     db: awilix.asFunction(require('./data-layer/database/database-init/db-init')),

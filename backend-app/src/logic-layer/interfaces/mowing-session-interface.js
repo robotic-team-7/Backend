@@ -3,13 +3,16 @@ module.exports = function({ mowerSessionRepository }) {
     const exports = {}
 
     /* To create a mowingSession */
-    exports.createMowerSession = function(mowerPositions, mowerId, callback) {
+    exports.createMowingSession = function(mowerPositions, mowerId, callback) {
 
         mowerSessionRepository.createMowingSession(mowerPositions, mowerId, function(error, mowerSessionId) {
 
 
             if (Object.keys(error).length > 0) {
-                callback(error, [])
+                dbError.errorCheck(error, function(errorCode) {
+                    console.log(errorCode)
+                    callback(errorCode, [])
+                })
             } else {
                 callback([], mowerSessionId)
             }
@@ -26,7 +29,10 @@ module.exports = function({ mowerSessionRepository }) {
 
         mowerSessionRepository.getMowerPositionsByMowingSessionId(mowerSessionId, function(error, mowerPositions) {
             if (Object.keys(error).length > 0) {
-                callback(error, [])
+                dbError.errorCheck(error, function(errorCode) {
+                    console.log(errorCode)
+                    callback(errorCode, [])
+                })
             } else {
 
                 if (Object.keys(mowerPositions).length > 0) {
@@ -35,7 +41,10 @@ module.exports = function({ mowerSessionRepository }) {
                 }
                 mowerSessionRepository.addMowerPositions(positionId, mowerPositions, function(error, mowerPositions) {
                     if (Object.keys(error).length > 0) {
-                        callback(error, [])
+                        dbError.errorCheck(error, function(errorCode) {
+                            console.log(errorCode)
+                            callback(errorCode, [])
+                        })
                     } else {
                         callback([], mowerPositions)
                     }
@@ -53,7 +62,10 @@ module.exports = function({ mowerSessionRepository }) {
 
         mowerSessionRepository.getMowerPositionsByMowerId(mowerId, function(error, mowerPositions) {
             if (Object.keys(error).length > 0) {
-                callback(error, [])
+                dbError.errorCheck(error, function(errorCode) {
+                    console.log(errorCode)
+                    callback(errorCode, [])
+                })
             } else {
                 callback([], mowerPositions)
             }
@@ -71,7 +83,10 @@ module.exports = function({ mowerSessionRepository }) {
 
         mowerSessionRepository.deletePositionData(mowerSessionId, function(error, mowerSessionDeleted) {
             if (Object.keys(error).length > 0) {
-                callback(error, [])
+                dbError.errorCheck(error, function(errorCode) {
+                    console.log(errorCode)
+                    callback(errorCode, mowerSessionDeleted)
+                })
             } else {
                 callback([], mowerSessionDeleted)
             }
