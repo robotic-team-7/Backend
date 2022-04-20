@@ -31,7 +31,12 @@ Step into: "/backend/backend-app" and run following command:
 ```
 npm install <package name>
 ```
+## The API layer 
+## The logic layer
 
+## The data layer
+
+![Data structure](/documentation/dataStructure.png)
 
 
 

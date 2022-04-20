@@ -1,24 +1,28 @@
 const express = require("express")
+const bodyParser = require('body-parser');
+const mobileRouter = require("./mobile/mobile-router");
 const app = express()
 
 
+module.exports = function({ mobileRouter, mowerRouter, imageRouter, positionsRouter }) {
+    app.use(bodyParser.json())
 
-module.exports = function({ restRouter, mowerRouter, imageRouter, positionsRouter }) {
 
     app.get("/", function(request, response) {
-
         response.send("Backend is working!")
-
     })
 
 
-    app.use('/rest', restRouter)
+
+
     app.use('/mowers', mowerRouter)
     app.use('/images', imageRouter)
     app.use('/positions', positionsRouter)
+    app.use('/mobile', mobileRouter)
 
-    let bodyParser = require('body-parser')
+
     app.use(bodyParser.urlencoded({ extended: false }))
+
 
     return app
 }

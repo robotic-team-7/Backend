@@ -2,7 +2,7 @@
 
 const express = require("express")
 
-module.exports = function({ positionsInterface }) {
+module.exports = function({ mowerSessionInterface }) {
 
     const router = express.Router()
 
@@ -11,14 +11,13 @@ module.exports = function({ positionsInterface }) {
 
         let positions = req.body.positions
         let mowerId = req.body.mowerID
-        
-        positionsInterface.createPositionsInstance(positions, mowerId, function (error, positionsId) {
+
+        mowerSessionInterface.createMowerSession(positions, mowerId, function(error, mowerSessionId) {
 
             if (error) {
                 res.send(error)
-            }
-            else {
-                res.send(positionsId)
+            } else {
+                res.send(mowerSessionId)
             }
         })
     })
@@ -29,12 +28,11 @@ module.exports = function({ positionsInterface }) {
         let positionsId = req.body.positionsId
         let newPositions = req.body.newPositions
 
-        positionsInterface.addPositions(positionsId, newPositions, function(error, positions) {
+        mowerSessionInterface.addPositions(positionsId, newPositions, function(error, positions) {
 
             if (error) {
                 res.send(error)
-            }
-            else {
+            } else {
                 res.send(positions)
             }
         })
@@ -45,12 +43,11 @@ module.exports = function({ positionsInterface }) {
 
         let mowerId = req.params.mowerId
 
-        positionsInterface.getPositionsByMowerId(mowerId, function(error, positions) {
+        mowerSessionInterface.getPositionsByMowerId(mowerId, function(error, positions) {
 
             if (error) {
                 res.send(error)
-            }
-            else {
+            } else {
                 res.send(positions)
             }
         })
@@ -61,12 +58,11 @@ module.exports = function({ positionsInterface }) {
 
         let positionsId = req.params.positionsId
 
-        positionsInterface.deletePositionData(positionsId, function(error, positionDataDeleted) {
+        mowerSessionInterface.deletePositionData(positionsId, function(error, positionDataDeleted) {
 
             if (error) {
                 res.send(error)
-            }
-            else {
+            } else {
                 res.send(positionDataDeleted)
             }
         })

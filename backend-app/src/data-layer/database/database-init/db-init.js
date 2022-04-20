@@ -1,5 +1,5 @@
 /* initilaizes the database */
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize')
 
 /* Establishes connection with the database */
 const sequelize = new Sequelize('postgres://postgres:mower123@local-db:5432/mower')
@@ -7,8 +7,8 @@ const sequelize = new Sequelize('postgres://postgres:mower123@local-db:5432/mowe
 /* Checks if the connection was successful */
 try {
 
-    sequelize.authenticate();
-    console.log('Connection has been established successfully.');
+    sequelize.authenticate()
+    console.log('Connection has been established successfully.')
 
     /* Creates table Mowers */
     const Mowers = sequelize.define('Mowers', {
@@ -37,16 +37,16 @@ try {
         timestamps: false
     });
 
-    /* Creates table Positions */
-    const Positions = sequelize.define('Positions', {
-        positionsId: {
+    /* Creates table MowingSessions */
+    const MowingSessions = sequelize.define('MowingSessions', {
+        mowingSessionsId: {
             primaryKey: true,
             autoIncrement: true,
             type: DataTypes.INTEGER,
             unique: true,
             allowNull: false
         },
-        positions: {
+        mowerPositions: {
             type: DataTypes.JSON,
             allowNull: false
         },
@@ -57,28 +57,26 @@ try {
         deletedAt: false,
     });
 
-    /* Creates table Pictures */
-    const Pictures = sequelize.define('Pictures', {
-        pictureId: {
+    /* Creates table Obstacles */
+    const Obstacles = sequelize.define('Obstacles', {
+        obstacleId: {
             primaryKey: true,
             autoIncrement: true,
             type: DataTypes.INTEGER,
             unique: true,
             allowNull: false
         },
-        userId: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
         imageClassification: {
-            primaryKey: true,
             type: DataTypes.STRING,
+            allowNull: true
+        },
+        ObstaclePosition: {
+            type: DataTypes.JSON,
             allowNull: false
         },
-        path: {
-            primaryKey: true,
+        imagePath: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
     }, {
         timestamps: false
@@ -86,11 +84,11 @@ try {
 
     /* Table relations */
 
-    // Adds mowerId to Pictures table
-    Pictures.belongsTo(Mowers, { foreignKey: 'mowerId', onDelete: 'cascade' })
+    // Adds mowerId to MowingSessions table
+    MowingSessions.belongsTo(Mowers, { foreignKey: 'mowerId', onDelete: 'cascade' })
 
-    // Adds mowerId to Position table
-    Positions.belongsTo(Mowers, { foreignKey: 'mowerId', onDelete: 'cascade' })
+    // Adds mowingSessionsId to Obstacles table
+    Obstacles.belongsTo(MowingSessions, { foreignKey: 'mowingSessionsId', onDelete: 'cascade' })
 
 
     /* Syncs all tables with the databse */
@@ -101,9 +99,9 @@ try {
             serialNumber: "abc123",
             status: false
         })
-        Positions.create({
-            mowerID: 1,
-            positions: {
+        MowingSessions.create({
+            mowerId: 1,
+            mowerPositions: {
                 points: [
                     [53.33, 44.33],
                     [66.44, 56.77]
@@ -117,12 +115,12 @@ try {
     module.exports = function({}) {
 
         /* Tables to export */
-        const exports = { Mowers, Positions, Pictures }
+        const exports = { Mowers, MowingSessions, Obstacles }
         return exports
     }
 
 
 } catch (error) {
     /* Prints error in the console if connection to the database fails */
-    console.error('Unable to connect to the database:', error);
+    console.error('Unable to connect to the database:', error)
 }
