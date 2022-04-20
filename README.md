@@ -33,10 +33,16 @@ npm install <package name>
 ```
 ## The API layer 
 ## The logic layer
-
+### Database error codes
+|           Code             |                                Reason                               |   
+| -------------------------  | ------------------------------------------------------------------- |
+| `dbUniqueConstraintError`  | Thrown when a unique constraint is violated in the database         | 
+| `dbForeignKeyConstraintError`| Thrown when a foreign key constraint is violated in the database    | 
+| `dbError`                  | Thrown when an internal error occurs in the database or when something unexpected happens, contact the admin|
 ## The data layer
 
 ![Data structure](/documentation/dataStructure.png)
+ 
 
 
 
