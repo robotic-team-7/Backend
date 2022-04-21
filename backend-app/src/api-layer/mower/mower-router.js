@@ -32,7 +32,7 @@ module.exports = function({ mowerInterface }) {
     /* Create new mower */
     router.post('/', function(req, res) {
 
-        let userID = req.body.userId
+        let userId = req.body.userId
         let serialNumber = req.body.serialNumber
         let status = req.body.status
 
