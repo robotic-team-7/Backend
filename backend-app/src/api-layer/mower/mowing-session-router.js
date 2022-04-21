@@ -7,7 +7,7 @@ module.exports = function({ mowerSessionInterface }) {
     const router = express.Router()
 
     /* Create new mowing session */
-    router.post('/create', function(req, res) {
+    router.post('/', function(req, res) {
 
         let mowerPositions = req.body.mowerPositions
         let mowerId = req.body.mowerID
@@ -23,7 +23,7 @@ module.exports = function({ mowerSessionInterface }) {
     })
 
     /* Add new positions to mowing session */
-    router.post('/add-positions', function(req, res) {
+    router.put('/', function(req, res) {
 
         let mowingSessionId = req.body.mowingSessionId
         let newMowerPositions = req.body.newMowerPositions
