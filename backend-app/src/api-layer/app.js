@@ -4,7 +4,7 @@ const mobileRouter = require("./mobile/mobile-router");
 const app = express()
 
 
-module.exports = function({ mobileRouter, mowerRouter, imageRouter, positionsRouter }) {
+module.exports = function({ mobileRouter, mowerRouter, imageRouter, mowingSessionRouter }) {
     app.use(bodyParser.json())
 
 
