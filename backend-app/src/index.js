@@ -13,12 +13,13 @@ container.register({
     mowerInterface: awilix.asFunction(require('./logic-layer/interfaces/mower-interface')),
     mowerSessionInterface: awilix.asFunction(require('./logic-layer/interfaces/mowing-session-interface')),
     dbError: awilix.asFunction(require('./logic-layer/error-handling/db-error')),
+    mowingSessionValidation: awilix.asFunction(require('./logic-layer/validation/mowing-session-validation')),
 
 
     //data-layer
     db: awilix.asFunction(require('./data-layer/database/database-init/db-init')),
     mowerRepository: awilix.asFunction(require('./data-layer/database/database-access/mower-repository')),
-    mowerSessionRepository: awilix.asFunction(require('./data-layer/database/database-access/mowing-session-repository')),
+    mowingSessionRepository: awilix.asFunction(require('./data-layer/database/database-access/mowing-session-repository')),
 
     //app
     app: awilix.asFunction(require('./api-layer/app'))

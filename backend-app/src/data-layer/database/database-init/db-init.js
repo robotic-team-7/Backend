@@ -39,7 +39,7 @@ try {
 
     /* Creates table MowingSessions */
     const MowingSessions = sequelize.define('MowingSessions', {
-        mowingSessionsId: {
+        mowingSessionId: {
             primaryKey: true,
             autoIncrement: true,
             type: DataTypes.INTEGER,
