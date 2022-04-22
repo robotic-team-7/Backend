@@ -1,23 +1,24 @@
-module.exports = function({ mowerSessionRepository }) {
+module.exports = function({ mowingSessionRepository, mowingSessionValidation }) {
 
     const exports = {}
 
     /* To create a mowingSession */
     exports.createMowingSession = function(mowerPositions, mowerId, callback) {
-
-        mowerSessionRepository.createMowingSession(mowerPositions, mowerId, function(error, mowerSessionId) {
-
-
-            if (Object.keys(error).length > 0) {
-                dbError.errorCheck(error, function(errorCode) {
-                    console.log(errorCode)
-                    callback(errorCode, [])
-                })
-            } else {
-                callback([], mowerSessionId)
-            }
-        })
-
+        const validationErrors = mowingSessionValidation.createMowingSessionValidation(mowerPositions, mowerId)
+        if (validationErrors.length > 0) {
+            callback(validationErrors, [])
+        } else {
+            mowingSessionRepository.createMowingSession(mowerPositions, mowerId, function(error, mowingSessionId) {
+                if (Object.keys(error).length > 0) {
+                    dbError.errorCheck(error, function(errorCode) {
+                        console.log(errorCode)
+                        callback(errorCode, [])
+                    })
+                } else {
+                    callback([], mowingSessionId)
+                }
+            })
+        }
     }
 
 
@@ -25,32 +26,35 @@ module.exports = function({ mowerSessionRepository }) {
 
 
     /* To get mowerPositions by mowingSessionId */
-    exports.addMowerPositions = function(mowerSessionId, newMowerPositions, callback) {
+    exports.addMowerPositions = function(mowingSessionId, newMowerPositions, callback) {
+        const validationErrors = mowingSessionValidation.addMowerPositionsValidation(mowingSessionId, newMowerPositions)
+        if (validationErrors.length > 0) {
+            callback(validationErrors, [])
+        } else {
+            mowingSessionRepository.getMowerPositionsByMowingSessionId(mowingSessionId, function(error, mowerPositions) {
+                if (Object.keys(error).length > 0) {
+                    dbError.errorCheck(error, function(errorCode) {
+                        console.log(errorCode)
+                        callback(errorCode, [])
+                    })
+                } else {
 
-        mowerSessionRepository.getMowerPositionsByMowingSessionId(mowerSessionId, function(error, mowerPositions) {
-            if (Object.keys(error).length > 0) {
-                dbError.errorCheck(error, function(errorCode) {
-                    console.log(errorCode)
-                    callback(errorCode, [])
-                })
-            } else {
-
-                if (Object.keys(mowerPositions).length > 0) {
-                    //add check for right data type [[52.289,83.894]]
-                    mowerPositions.points = mowerPositions.points.concat(newMowerPositions)
-                }
-                mowerSessionRepository.addMowerPositions(positionId, mowerPositions, function(error, mowerPositions) {
-                    if (Object.keys(error).length > 0) {
-                        dbError.errorCheck(error, function(errorCode) {
-                            console.log(errorCode)
-                            callback(errorCode, [])
-                        })
-                    } else {
-                        callback([], mowerPositions)
+                    if (Object.keys(mowerPositions).length > 0) {
+                        mowerPositions.points = mowerPositions.points.concat(newMowerPositions)
                     }
-                })
-            }
-        })
+                    mowingSessionRepository.addMowerPositions(mowingSessionId, mowerPositions, function(error, mowerPositions) {
+                        if (Object.keys(error).length > 0) {
+                            dbError.errorCheck(error, function(errorCode) {
+                                console.log(errorCode)
+                                callback(errorCode, [])
+                            })
+                        } else {
+                            callback([], mowerPositions)
+                        }
+                    })
+                }
+            })
+        }
     }
 
 
@@ -59,17 +63,21 @@ module.exports = function({ mowerSessionRepository }) {
 
     /* To get mowerPositions by mowerId */
     exports.getMowerPositionsByMowerId = function(mowerId, callback) {
-
-        mowerSessionRepository.getMowerPositionsByMowerId(mowerId, function(error, mowerPositions) {
-            if (Object.keys(error).length > 0) {
-                dbError.errorCheck(error, function(errorCode) {
-                    console.log(errorCode)
-                    callback(errorCode, [])
-                })
-            } else {
-                callback([], mowerPositions)
-            }
-        })
+        const validationErrors = mowingSessionValidation.getMowerPositionsByMowerIdValidation(mowerId)
+        if (validationErrors.length > 0) {
+            callback(validationErrors, [])
+        } else {
+            mowingSessionRepository.getMowerPositionsByMowerId(mowerId, function(error, mowerPositions) {
+                if (Object.keys(error).length > 0) {
+                    dbError.errorCheck(error, function(errorCode) {
+                        console.log(errorCode)
+                        callback(errorCode, [])
+                    })
+                } else {
+                    callback([], mowerPositions)
+                }
+            })
+        }
     }
 
 
@@ -79,19 +87,23 @@ module.exports = function({ mowerSessionRepository }) {
 
 
     /* To delete position data */
-    exports.deletePositionData = function(mowerSessionId, callback) {
+    exports.deletePositionData = function(mowingSessionId, callback) {
+        const validationErrors = mowingSessionValidation.deletePositionDataValidation(mowerId)
+        if (validationErrors.length > 0) {
+            callback(validationErrors, [])
+        } else {
+            mowingSessionRepository.deletePositionData(mowingSessionId, function(error, mowingSessionDeleted) {
+                if (Object.keys(error).length > 0) {
+                    dbError.errorCheck(error, function(errorCode) {
+                        console.log(errorCode)
+                        callback(errorCode, mowingSessionDeleted)
+                    })
+                } else {
+                    callback([], mowingSessionDeleted)
+                }
+            })
 
-        mowerSessionRepository.deletePositionData(mowerSessionId, function(error, mowerSessionDeleted) {
-            if (Object.keys(error).length > 0) {
-                dbError.errorCheck(error, function(errorCode) {
-                    console.log(errorCode)
-                    callback(errorCode, mowerSessionDeleted)
-                })
-            } else {
-                callback([], mowerSessionDeleted)
-            }
-        })
-
+        }
     }
 
 
