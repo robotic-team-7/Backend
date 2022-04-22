@@ -1,7 +1,10 @@
 /* Rest api, file included to keep folder on git*/
 const express = require("express")
+const CognitoService = require('../services/cognito.config')
+
 
 module.exports = function({ mowerInterface, mowerSessionInterface }) {
+
 
     const router = express.Router()
 
@@ -21,8 +24,8 @@ module.exports = function({ mowerInterface, mowerSessionInterface }) {
 
     //Get all mowers from user id
     router.get('/user/:userID', function(request, response) {
-        const userID = request.params.userID
-        mowerInterface.getAllMowersByUserId(userID, function(errors, mowers) {
+        const userId = request.params.userID
+        mowerInterface.getAllMowersByUserId(userId, function(errors, mowers) {
             if (errors.length == 0 && mowers.length == 0) {
                 response.status(404).end()
             } else if (errors.length == 0) {
@@ -47,11 +50,11 @@ module.exports = function({ mowerInterface, mowerSessionInterface }) {
     //Get positions from mower id
     router.get('/mowerPositions/:mowerID', function(request, response) {
         const mowerId = request.params.mowerID
-        mowerSessionInterface.getMowerPositionsByMowerId(mowerId, function(error, positions) {
-            if (error.length == 0 && positions.length == 0) {
+        mowerSessionInterface.getMowerPositionsByMowerId(mowerId, function(error, mowerPositions) {
+            if (error.length == 0 && mowerPositions.length == 0) {
                 response.status(404).end()
             } else if (error.length == 0) {
-                response.status(200).json(positions)
+                response.status(200).json(mowerPositions)
             } else {
                 response.status(500).json(error)
             }
@@ -61,12 +64,12 @@ module.exports = function({ mowerInterface, mowerSessionInterface }) {
 
     //Create a mower
     router.post('/', function(request, response) {
-        const userID = request.body.UserID
-        const serialNumber = request.body.SerialNumber
-        const status = request.body.Status
-        mowerInterface.createMower(userID, serialNumber, status, function(error, MooverID) {
+        const userID = request.body.userId
+        const serialNumber = request.body.serialNumber
+        const status = request.body.status
+        mowerInterface.createMower(userID, serialNumber, status, function(error, mowerId) {
             if (error.length == 0) {
-                response.status(201).json(MooverID)
+                response.status(201).json(mowerId)
             } else {
                 response.status(404).end()
             }
@@ -87,9 +90,9 @@ module.exports = function({ mowerInterface, mowerSessionInterface }) {
         })
     })
 
-    router.delete('/:positionsID', function(request, response) {
-        const positionsId = request.params.positionsID
-        mowerInterface.deleteMower(positionsId, function(error, positionDataDeleted) {
+    router.delete('/:mowingSessionsID', function(request, response) {
+        const movingSessionsId = request.params.mowingSessionsID
+        mowerSessionInterface.deletePositionData(movingSessionsId, function(error, positionDataDeleted) {
             if (error.length == 0 && positionDataDeleted) {
                 response.status(204).json()
             } else if (error.length == 0 && !positionDataDeleted) {
@@ -103,7 +106,7 @@ module.exports = function({ mowerInterface, mowerSessionInterface }) {
     //Update the status for the mower
     router.put('/:mowerID', function(request, response) {
         const mowerId = request.params.mowerID
-        const newStatus = request.body.Status
+        const newStatus = request.body.status
         mowerInterface.updateMowerStatus(mowerId, newStatus, function(errors, mower) {
             if (errors.length == 0) {
                 response.status(200).json(mower)

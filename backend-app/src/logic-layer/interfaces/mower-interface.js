@@ -5,7 +5,7 @@ module.exports = function({ mowerRepository }) {
     /* To create a mower */
     exports.createMower = function(userId, serialNumber, status, callback) {
 
-        mowerRepository.createMower(userId, serialNumber, status, function(error, MowerID) {
+        mowerRepository.createMower(userId, serialNumber, status, function(error, mowerId) {
             if (Object.keys(error).length > 0) {
                 callback(error, [])
             } else {
@@ -18,7 +18,7 @@ module.exports = function({ mowerRepository }) {
     /* To get a mower by mowerId */
     exports.getMowerByMowerId = function(mowerId, callback) {
 
-        mowerRepository.getMowerById(mowerId, function(error, mower) {
+        mowerRepository.getMowerByMowerId(mowerId, function(error, mower) {
             if (Object.keys(error).length > 0) {
                 callback(error, [])
             } else {
