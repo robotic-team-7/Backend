@@ -15,11 +15,14 @@ module.exports = function({ mowerInterface }) {
         /* Call mowerInterface to update mower status */
         mowerInterface.updateMowerStatus(mowerId, status, function(error, newMowerStatus) {
 
-            if (error.length > 0 && mowerId == null) {
-                res.status(404).json(error)
+            if (error.length == 0) {
+                res.status(200).json(newMowerStatus)
+            }
+            else if (newMowerStatus != status) {
+               res.status(400).json(error)
             }
             else {
-                res.status(200).json(newMowerStatus)
+                res.status(500).json(error)
             }
         })
     })

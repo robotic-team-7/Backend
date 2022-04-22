@@ -14,10 +14,11 @@ module.exports = function({ mowerSessionInterface }) {
 
         mowerSessionInterface.createMowerSession(mowerPositions, mowerId, function(error, mowingSessionId) {
 
-            if (error) {
-                res.send(error)
-            } else {
-                res.send(mowingSessionId)
+            if (error.length == 0) {
+                res.status(200).json(mowingSessionId)
+            }
+            else {
+                res.status(400).json(error)
             }
         })
     })
@@ -30,40 +31,11 @@ module.exports = function({ mowerSessionInterface }) {
 
         mowerSessionInterface.addMowerPositions(mowingSessionId, newMowerPositions, function(error, mowerPositions) {
 
-            if (error) {
-                res.send(error)
-            } else {
-                res.send(mowerPositions)
+            if (error.length == 0) {
+                res.status(200).json(mowerPositions)
             }
-        })
-    })
-
-    /* Retrieve mowerPositions by mowerId */
-    router.get('/:mowerId', function(req, res) {
-
-        let mowerId = req.params.mowerId
-
-        mowerSessionInterface.getPositionsByMowerId(mowerId, function(error, mowerPositions) {
-
-            if (error) {
-                res.send(error)
-            } else {
-                res.send(mowerPositions)
-            }
-        })
-    })
-
-    /* Delete positions by mowingSessionId */
-    router.delete('/:mowingSessionId', function(req, res) {
-
-        let mowingSessionId = req.params.mowingSessionId
-
-        mowerSessionInterface.deletePositionData(mowingSessionId, function(error, mowingSessionDeleted) {
-
-            if (error) {
-                res.send(error)
-            } else {
-                res.send(mowingSessionDeleted)
+            else {
+                res.status(400).json(error)
             }
         })
     })
