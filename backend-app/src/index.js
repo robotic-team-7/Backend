@@ -6,7 +6,7 @@ container.register({
     //api-layer
     mowerRouter: awilix.asFunction(require('./api-layer/mower/mower-router')),
     imageRouter: awilix.asFunction(require('./api-layer/mower/image-router')),
-    positionsRouter: awilix.asFunction(require('./api-layer/mower/positions-router')),
+    mowingSessionRouter: awilix.asFunction(require('./api-layer/mower/mowing-session-router')),
     mobileRouter: awilix.asFunction(require('./api-layer/mobile/mobile-router')),
 
     //logic-layer
@@ -14,6 +14,8 @@ container.register({
     mowingSessionInterface: awilix.asFunction(require('./logic-layer/interfaces/mowing-session-interface')),
     dbError: awilix.asFunction(require('./logic-layer/error-handling/db-error')),
     mowingSessionValidation: awilix.asFunction(require('./logic-layer/validation/mowing-session-validation')),
+    mowerValidation: awilix.asFunction(require('./logic-layer/validation/mower-validation')),
+
 
 
     //data-layer
