@@ -1,7 +1,7 @@
 /* Rest api, file included to keep folder on git*/
 const express = require("express")
 
-module.exports = function({ mowerInterface, mowerSessionInterface }) {
+module.exports = function({ mowerInterface, mowingSessionInterface }) {
 
     const router = express.Router()
 
@@ -47,7 +47,7 @@ module.exports = function({ mowerInterface, mowerSessionInterface }) {
     //Get positions from mower id
     router.get('/mowerPositions/:mowerID', function(request, response) {
         const mowerId = request.params.mowerID
-        mowerSessionInterface.getMowerPositionsByMowerId(mowerId, function(error, positions) {
+        mowingSessionInterface.getMowerPositionsByMowerId(mowerId, function(error, positions) {
             if (error.length == 0 && positions.length == 0) {
                 response.status(404).end()
             } else if (error.length == 0) {
@@ -68,7 +68,8 @@ module.exports = function({ mowerInterface, mowerSessionInterface }) {
             if (error.length == 0) {
                 response.status(201).json(MooverID)
             } else {
-                response.status(404).end()
+
+                response.status(404).json(error)
             }
         })
     })
