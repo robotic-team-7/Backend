@@ -33,11 +33,17 @@ npm install <package name>
 ```
 ## The API layer 
 ## The logic layer
+### Validation error codes
+|           Code             |                                Reason                               |   
+| -------------------------  | ------------------------------------------------------------------- |
+| `invalidDataType`          | Thrown when a invalid data type is sent to the backend, e.g. the backend expects a Int but got a string| 
+| `notAnArray`               | Thrown when the backend expects an array as an input, e.g. [ ]    | 
+| `invalidDataTypeInArray`   | Thrown when the data type in the array is not a number |
 ### Database error codes
 |           Code             |                                Reason                               |   
 | -------------------------  | ------------------------------------------------------------------- |
 | `dbUniqueConstraintError`  | Thrown when a unique constraint is violated in the database         | 
-| `dbForeignKeyConstraintError`| Thrown when a foreign key constraint is violated in the database    | 
+| `dbForeignKeyConstraintError`| Thrown when a foreign key constraint is violated in the database  | 
 | `dbError`                  | Thrown when an internal error occurs in the database or when something unexpected happens, contact the admin|
 ## The data layer
 
