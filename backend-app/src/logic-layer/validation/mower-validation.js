@@ -5,26 +5,26 @@ module.exports = function({}) {
     /* Validates parameters of createMower */
     exports.createMowerValidation = function(userId, serialNumber, status) {
 
-        const validationErrors = []
+        /* const validationErrors = []
+             /*
+             // Check if the userId is an integer
+             if (Number.isInteger(userId) == false) {
+                 validationErrors.push('invalidDataType')
+             }
 
-        // Check if the userId is an integer
-        if (Number.isInteger(userId) == false) {
-            validationErrors.push('invalidDataType')
-        }
+         // Check if the serialNumber is a string
+         if (typeof serialNumber !== 'string') {
+             console.log(typeof serialNumber)
+             validationErrors.push('invalidDataType')
+         }
 
-        // Check if the serialNumber is a string
-        if (typeof serialNumber != 'string') {
-            console.log(typeof serialNumber)
-            validationErrors.push('invalidDataType')
-        }
+         // Check if the status is a boolean
+         if (typeof status !== 'boolean') {
+             console.log(typeof status)
+             validationErrors.push('invalidDataType')
+         }
 
-        // Check if the status is a boolean
-        if (typeof status != 'boolean') {
-            console.log(typeof status)
-            validationErrors.push('invalidDataType')
-        }
-
-        return validationErrors
+         return validationErrors*/
     }
 
 
@@ -72,7 +72,7 @@ module.exports = function({}) {
         }
 
         // Check if the status is a boolean
-        if (typeof status != 'boolean') {
+        if (typeof status !== 'boolean') {
             console.log(typeof status)
             validationErrors.push('invalidDataType')
         }

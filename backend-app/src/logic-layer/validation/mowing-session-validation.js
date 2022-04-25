@@ -80,7 +80,7 @@ module.exports = function({}) {
 
 
     /* Validates parameters of deletePositionData */
-    exports.deletePositionDataValidation = function(mowingSessionId) {
+    exports.deleteMowingSessionValidation = function(mowingSessionId) {
 
         const validationErrors = []
 

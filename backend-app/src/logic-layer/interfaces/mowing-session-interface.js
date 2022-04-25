@@ -1,4 +1,4 @@
-module.exports = function({ mowingSessionRepository, mowingSessionValidation }) {
+module.exports = function({ mowingSessionRepository, dbError, mowingSessionValidation }) {
 
     const exports = {}
 
@@ -87,12 +87,12 @@ module.exports = function({ mowingSessionRepository, mowingSessionValidation }) 
 
 
     /* To delete position data */
-    exports.deletePositionData = function(mowingSessionId, callback) {
-        const validationErrors = mowingSessionValidation.deletePositionDataValidation(mowerId)
+    exports.deleteMowingSession = function(mowingSessionId, callback) {
+        const validationErrors = mowingSessionValidation.deleteMowingSessionValidation(mowingSessionId)
         if (validationErrors.length > 0) {
             callback(validationErrors, [])
         } else {
-            mowingSessionRepository.deletePositionData(mowingSessionId, function(error, mowingSessionDeleted) {
+            mowingSessionRepository.deleteMowingSession(mowingSessionId, function(error, mowingSessionDeleted) {
                 if (Object.keys(error).length > 0) {
                     dbError.errorCheck(error, function(errorCode) {
                         console.log(errorCode)
