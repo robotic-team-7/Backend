@@ -10,7 +10,7 @@ module.exports = function({ mowerSessionInterface }) {
     router.post('/', function(req, res) {
 
         let mowerPositions = req.body.mowerPositions
-        let mowerId = req.body.mowerID
+        let mowerId = req.body.mowerId
 
         mowerSessionInterface.createMowerSession(mowerPositions, mowerId, function(error, mowingSessionId) {
 
