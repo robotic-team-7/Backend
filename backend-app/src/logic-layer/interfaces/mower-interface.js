@@ -23,8 +23,6 @@ module.exports = function({ mowerRepository, dbError, mowerValidation }) {
 
 
 
-
-
     /* To get a mower by mowerId */
     exports.getMowerByMowerId = function(mowerId, callback) {
         const validationErrors = mowerValidation.getMowerByMowerIdValidation(mowerId)
