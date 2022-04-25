@@ -6,15 +6,27 @@ module.exports = function() {
     const router = express.Router()
     const cognito = new CognitoService();
 
-    router.post('/sign-up', function(request, response) {
 
+
+    router.get('/users/:username', function(req, res) {
+        const username = req.params.username
+        cognito.getUser(username)
+            .then(result => {
+                if (result.statusCode === 200) {
+                    res.status(200).json(result.data).end();
+                } else {
+                    res.status(400).json(result).end();
+                }
+            })
+    })
+
+    router.post('/sign-up', function(request, response) {
         const username = request.body.username
         const password = request.body.password
         const email = request.body.email
         const name = request.body.name
         const family_name = request.body.family_name
-
-        //username = username == undefined ? email.split('@')[0] + (Math.random() + 1).toString(10).substring(7) : username
+            //username = username == undefined ? email.split('@')[0] + (Math.random() + 1).toString(10).substring(7) : username
 
         let userAttributes = [];
         userAttributes.push({ Name: 'email', Value: email });
@@ -24,7 +36,8 @@ module.exports = function() {
         cognito.signUpUser(username, password, userAttributes)
             .then(result => {
                 if (result === true) {
-                    response.status(200).end()
+                    //response.setHeader("Authorization", "Bearer " + bearerToken)
+                    response.status(200).json({ username, userAttributes })
                 } else {
                     response.status(400).json({ message: result.message, code: result.code, statusCode: result.statusCode }).end()
                 }
@@ -44,7 +57,6 @@ module.exports = function() {
     })
 
     router.post('/change-password', function(request, response) {
-
         const accessToken = request.body.accessToken
         const previousPassword = request.body.previousPassword
         const newPassword = request.body.newPassword
@@ -60,7 +72,6 @@ module.exports = function() {
     })
 
     router.put('/update-user', function(request, response) {
-
         const accessToken = request.body.accessToken
         const name = request.body.name
         const family_name = request.body.family_name;
@@ -71,7 +82,7 @@ module.exports = function() {
         cognito.updateUserAttributes(accessToken, userAttributes)
             .then(result => {
                 if (result.statusCode === 204) {
-                    response.status(204).json(result.data).end();
+                    response.status(204).json().end();
                 } else {
                     response.status(400).json(result).end();
                 }
@@ -79,7 +90,7 @@ module.exports = function() {
 
     })
 
-    router.post('/confirm-forgot-password', function(req, res) {
+    router.post('/confirm-forgot-password', function(request, response) {
         const confirmationCode = request.body.confirmationCode
         const username = request.body.username
         const password = request.body.password;
@@ -96,7 +107,6 @@ module.exports = function() {
     })
 
     router.post('/sign-in', function(request, response) {
-
         const username = request.body.username
         const password = request.body.password;
 
@@ -117,7 +127,7 @@ module.exports = function() {
         cognito.verifyAccount(username, verificationCode)
             .then(result => {
                 if (result === true) {
-                    response.status(200).end()
+                    response.status(200).json("Account verified")
                 } else {
                     response.status(400).json(result).end()
                 }

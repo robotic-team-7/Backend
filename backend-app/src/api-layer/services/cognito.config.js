@@ -12,6 +12,7 @@ class CognitoService {
     cognitoIdentity;
     secretHash = '5fpoerll28646t3g88bnmnfh4karhpdkgbknug2qfba56kp7l3l'
     clientId = '19inrscbhc4hgrps7j31lj7gc5'
+    userPoolId = 'eu-north-1_0Ud30LIwz'
 
     constructor() {
         this.cognitoIdentity = new AWS.CognitoIdentityServiceProvider(this.config);
@@ -157,6 +158,26 @@ class CognitoService {
             return error
         }
 
+    }
+
+    async getUser(username) {
+        const params = {
+            "Username": username,
+            "UserPoolId": this.userPoolId,
+        }
+        try {
+
+            const res = await this.cognitoIdentity.adminGetUser(params).promise();
+            const data = {
+                data: res,
+                statusCode: 200
+            }
+            return data
+
+        } catch (error) {
+            console.log(error);
+            return error;
+        }
     }
 
     async forgotPassword(username) {

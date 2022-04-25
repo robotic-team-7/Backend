@@ -90,7 +90,7 @@ module.exports = function({ mowerInterface, mowerSessionInterface }) {
         })
     })
 
-    router.delete('/:mowingSessionsID', function(request, response) {
+    router.delete('/positions/:mowingSessionsID', function(request, response) {
         const movingSessionsId = request.params.mowingSessionsID
         mowerSessionInterface.deletePositionData(movingSessionsId, function(error, positionDataDeleted) {
             if (error.length == 0 && positionDataDeleted) {

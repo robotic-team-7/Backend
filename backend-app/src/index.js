@@ -9,6 +9,7 @@ container.register({
     positionsRouter: awilix.asFunction(require('./api-layer/mower/positions-router')),
     mobileRouter: awilix.asFunction(require('./api-layer/mobile/mobile-router')),
     authenticationRouter: awilix.asFunction(require('./api-layer/mobile/authentication-router')),
+    //adminRouter: awilix.asFunction(require('./api-layer/mobile/admin-router')),
 
     //logic-layer
     mowerInterface: awilix.asFunction(require('./logic-layer/interfaces/mower-interface')),
