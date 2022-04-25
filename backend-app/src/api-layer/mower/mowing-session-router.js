@@ -2,7 +2,7 @@
 
 const express = require("express")
 
-module.exports = function({ mowerSessionInterface }) {
+module.exports = function({ mowingSessionInterface }) {
 
     const router = express.Router()
 
@@ -12,12 +12,11 @@ module.exports = function({ mowerSessionInterface }) {
         let mowerPositions = req.body.mowerPositions
         let mowerId = req.body.mowerId
 
-        mowerSessionInterface.createMowerSession(mowerPositions, mowerId, function(error, mowingSessionId) {
+        mowingSessionInterface.createMowerSession(mowerPositions, mowerId, function(error, mowingSessionId) {
 
             if (error.length == 0) {
                 res.status(200).json(mowingSessionId)
-            }
-            else {
+            } else {
                 res.status(400).json(error)
             }
         })
@@ -29,12 +28,11 @@ module.exports = function({ mowerSessionInterface }) {
         let mowingSessionId = req.body.mowingSessionId
         let newMowerPositions = req.body.newMowerPositions
 
-        mowerSessionInterface.addMowerPositions(mowingSessionId, newMowerPositions, function(error, mowerPositions) {
+        mowingSessionInterface.addMowerPositions(mowingSessionId, newMowerPositions, function(error, mowerPositions) {
 
             if (error.length == 0) {
                 res.status(200).json(mowerPositions)
-            }
-            else {
+            } else {
                 res.status(400).json(error)
             }
         })
