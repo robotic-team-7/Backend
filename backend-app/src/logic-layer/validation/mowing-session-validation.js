@@ -22,7 +22,7 @@ module.exports = function({}) {
         }
 
         // Check if the mowerId is an integer
-        if (Number.isInteger(mowerId) == false) {
+        if (isNaN(parseInt(mowerId)) == true) {
             validationErrors.push('invalidDataType')
         }
 
@@ -52,7 +52,7 @@ module.exports = function({}) {
         }
 
         // Check if the mowingSessionId is an integer
-        if (Number.isInteger(mowingSessionId) == false) {
+        if (isNaN(parseInt(mowingSessionId)) == true) {
             validationErrors.push('invalidDataType')
         }
 
@@ -63,12 +63,12 @@ module.exports = function({}) {
 
 
     /* Validates parameters of getMowerPositionsByMowerId */
-    exports.getMowerPositionsByMowerIdValidation = function(mowerId) {
+    exports.getAllMowingSessionsByMowerIdValidation = function(mowerId) {
 
         const validationErrors = []
 
         // Check if the mowerId is an integer
-        if (Number.isInteger(mowerId) == false) {
+        if (isNaN(parseInt(mowerId)) == true) {
             validationErrors.push('invalidDataType')
         }
 
@@ -84,8 +84,17 @@ module.exports = function({}) {
 
         const validationErrors = []
 
-        // Check if the mowerId is an integer
-        if (Number.isInteger(mowingSessionId) == false) {
+        // Check if the mowingSessionId is an integer
+        if (isNaN(parseInt(mowingSessionId)) == true) {
+            validationErrors.push('invalidDataType')
+        }
+
+        return validationErrors
+    }
+
+    exports.getMowingSessionByMowingSessionIdValidation = function(mowingSessionId) {
+        const validationErrors = []
+        if (isNaN(parseInt(mowingSessionId)) == true) {
             validationErrors.push('invalidDataType')
         }
 

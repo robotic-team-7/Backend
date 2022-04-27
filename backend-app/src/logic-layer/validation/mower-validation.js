@@ -4,27 +4,26 @@ module.exports = function({}) {
 
     /* Validates parameters of createMower */
     exports.createMowerValidation = function(userId, serialNumber, status) {
+        const validationErrors = []
 
-        /* const validationErrors = []
-             /*
-             // Check if the userId is an integer
-             if (Number.isInteger(userId) == false) {
-                 validationErrors.push('invalidDataType')
-             }
+        // Check if the userId is an integer
+        if (isNaN(parseInt(userId)) == true) {
+            validationErrors.push('invalidDataType')
+        }
 
-         // Check if the serialNumber is a string
-         if (typeof serialNumber !== 'string') {
-             console.log(typeof serialNumber)
-             validationErrors.push('invalidDataType')
-         }
+        // Check if the serialNumber is a string
+        if (typeof serialNumber !== 'string') {
+            console.log(typeof serialNumber)
+            validationErrors.push('invalidDataType')
+        }
 
-         // Check if the status is a boolean
-         if (typeof status !== 'boolean') {
-             console.log(typeof status)
-             validationErrors.push('invalidDataType')
-         }
+        // Check if the status is a boolean
+        if (typeof status != 'boolean') {
+            console.log(typeof status)
+            validationErrors.push('invalidDataType')
+        }
 
-         return validationErrors*/
+        return validationErrors
     }
 
 
@@ -34,9 +33,8 @@ module.exports = function({}) {
     exports.getMowerByMowerIdValidation = function(mowerId) {
 
         const validationErrors = []
-
-        // Check if the mowerId is an integer
-        if (Number.isInteger(mowerId) == false) {
+            // Check if the mowerId is an integer
+        if (isNaN(parseInt(mowerId)) == true) {
             validationErrors.push('invalidDataType')
         }
         return validationErrors
@@ -51,7 +49,7 @@ module.exports = function({}) {
         const validationErrors = []
 
         // Check if the userId is an integer
-        if (Number.isInteger(userId) == false) {
+        if (isNaN(parseInt(userId)) == true) {
             validationErrors.push('invalidDataType')
         }
         return validationErrors
@@ -65,9 +63,8 @@ module.exports = function({}) {
     exports.updateMowerStatusValidation = function(mowerId, status) {
 
         const validationErrors = []
-
-        // Check if the mowerId is an integer
-        if (Number.isInteger(mowerId) == false) {
+            // Check if the mowerId is an integer
+        if (isNaN(parseInt(mowerId)) == true) {
             validationErrors.push('invalidDataType')
         }
 
@@ -88,7 +85,7 @@ module.exports = function({}) {
         const validationErrors = []
 
         // Check if the mowerId is an integer
-        if (Number.isInteger(mowerId) == false) {
+        if (isNaN(parseInt(mowerId)) == true) {
             validationErrors.push('invalidDataType')
         }
 

@@ -5,9 +5,9 @@ module.exports = function({ mowerInterface, mowingSessionInterface }) {
     const router = express.Router()
 
     //Get one specific mower from mower id
-    router.get('/:mowerID', function(request, response) {
-        const mowerId = request.params.mowerID
-        mowerInterface.getMowerByMowerId(mowerId, function(error, mower) {
+    router.get('/:mowerId', function(request, response) {
+        const mowerID = request.params.mowerId
+        mowerInterface.getMowerByMowerId(mowerID, function(error, mower) {
             if (error.length == 0 && mower.length == 0) {
                 response.status(404).end()
             } else if (error.length == 0) {
@@ -19,8 +19,9 @@ module.exports = function({ mowerInterface, mowingSessionInterface }) {
     })
 
     //Get all mowers from user id
-    router.get('/user/:userID', function(request, response) {
-        const userID = request.params.userID
+    router.get('/user/:userId', function(request, response) {
+        const userID = request.params.userId
+        console.log(userID)
         mowerInterface.getAllMowersByUserId(userID, function(errors, mowers) {
             if (errors.length == 0 && mowers.length == 0) {
                 response.status(404).end()
@@ -33,24 +34,38 @@ module.exports = function({ mowerInterface, mowingSessionInterface }) {
     })
 
     //Start the mower
-    router.put('/start/:mowerID', function(request, response) { //post or put i dont know yet
-        const mowerId = request.params.mowerID
+    router.put('/start/:mowerId', function(request, response) { //post or put i dont know yet
+        const mowerId = request.params.mowerId
 
     })
 
     //Stop the mower
-    router.put('/stop/:mowerID', function(request, response) {
-        const mowerId = request.params.mowerID
+    router.put('/stop/:mowerId', function(request, response) {
+        const mowerId = request.params.mowerId
     })
 
-    //Get positions from mower id
-    router.get('/mowerPositions/:mowerID', function(request, response) {
-        const mowerId = request.params.mowerID
-        mowingSessionInterface.getMowerPositionsByMowerId(mowerId, function(error, positions) {
-            if (error.length == 0 && positions.length == 0) {
+    //Get specific mowingSession by mowingsessionID
+    router.get('/mowerSessionPositions/:mowingSessionId', function(request, response) {
+        const mowingSessionID = request.params.mowingSessionId
+        mowingSessionInterface.getMowingSessionByMowingSessionId(mowingSessionID, function(error, mowingSession) {
+            if (error.length == 0 && mowingSession.length == 0) {
                 response.status(404).end()
             } else if (error.length == 0) {
-                response.status(200).json(positions)
+                response.status(200).json(mowingSession)
+            } else {
+                response.status(500).json(error)
+            }
+        })
+    })
+
+    //Get all mowingSession from one mower by mowerId
+    router.get('/mowerSessions/:mowerId', function(request, response) {
+        const mowerID = request.params.mowerId
+        mowingSessionInterface.getAllMowingSessionsByMowerId(mowerID, function(error, mowingSessions) {
+            if (error.length == 0 && mowingSessions.length == 0) {
+                response.status(404).end()
+            } else if (error.length == 0) {
+                response.status(200).json(mowingSessions)
             } else {
                 response.status(500).json(error)
             }
@@ -58,25 +73,25 @@ module.exports = function({ mowerInterface, mowingSessionInterface }) {
     })
 
 
+
     //Create a mower
-    router.post('/', function(request, response) {
-        const userID = request.body.UserID
-        const serialNumber = request.body.SerialNumber
-        const status = request.body.Status
-        mowerInterface.createMower(userID, serialNumber, status, function(error, MooverID) {
+    router.post('/mower', function(request, response) {
+        const userId = request.body.userId
+        const serialNumber = request.body.serialNumber
+        const status = request.body.status
+        mowerInterface.createMower(userId, serialNumber, status, function(error, MooverID) {
             if (error.length == 0) {
                 response.status(201).json(MooverID)
             } else {
-
                 response.status(404).json(error)
             }
         })
     })
 
     //Delete a mower
-    router.delete('/:mowerID', function(request, response) {
-        const mowerId = request.params.mowerID
-        mowerInterface.deleteMower(mowerId, function(error, mowerDeleted) {
+    router.delete('/mower/:mowerId', function(request, response) {
+        const mowerID = request.params.mowerId
+        mowerInterface.deleteMower(mowerID, function(error, mowerDeleted) {
             if (error.length == 0 && mowerDeleted) {
                 response.status(204).json()
             } else if (error.length == 0 && !mowerDeleted) {
@@ -87,13 +102,12 @@ module.exports = function({ mowerInterface, mowingSessionInterface }) {
         })
     })
 
-    router.delete('/positions/:movingPositionsID', function(request, response) {
-        const movingPositionsID = request.params.movingPositionsID
-        console.log(movingPositionsID)
-        mowingSessionInterface.deleteMowingSession(movingPositionsID, function(error, movingSessionDeleted) {
-            if (error.length == 0 && movingSessionDeleted) {
+    router.delete('/mowingSession/:mowingSessionId', function(request, response) {
+        const mowingSessionID = request.params.mowingSessionId
+        mowingSessionInterface.deleteMowingSession(mowingSessionID, function(error, mowingSessionDeleted) {
+            if (error.length == 0 && mowingSessionDeleted) {
                 response.status(204).json()
-            } else if (error.length == 0 && !movingSessionDeleted) {
+            } else if (error.length == 0 && !mowingSessionDeleted) {
                 response.status(404).json()
             } else {
                 response.status(500).json(error)
@@ -102,10 +116,10 @@ module.exports = function({ mowerInterface, mowingSessionInterface }) {
     })
 
     //Update the status for the mower
-    router.put('/:mowerID', function(request, response) {
-        const mowerId = request.params.mowerID
-        const newStatus = request.body.Status
-        mowerInterface.updateMowerStatus(mowerId, newStatus, function(errors, mower) {
+    router.put('/mower/:mowerId', function(request, response) {
+        const mowerID = request.params.mowerId
+        const newStatus = request.body.status
+        mowerInterface.updateMowerStatus(mowerID, newStatus, function(errors, mower) {
             if (errors.length == 0) {
                 response.status(200).json(mower)
             } else {
