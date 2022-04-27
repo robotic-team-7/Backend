@@ -9,8 +9,8 @@ module.exports = function({ mowerInterface }) {
     /* Update mower status */
     router.put('/:mowerId', function(req, res) {
 
-        let mowerId = req.params.mowerId
-        let status = req.body.status
+        let mowerId = parseInt(req.params.mowerId)
+        let status = Boolean(req.body.newStatus)
 
         /* Call mowerInterface to update mower status */
         mowerInterface.updateMowerStatus(mowerId, status, function(error, newMowerStatus) {

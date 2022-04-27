@@ -10,9 +10,9 @@ module.exports = function({ mowingSessionInterface }) {
     router.post('/', function(req, res) {
 
         let mowerPositions = req.body.mowerPositions
-        let mowerId = req.body.mowerId
+        let mowerId = parseInt(req.body.mowerId)
 
-        mowingSessionInterface.createMowerSession(mowerPositions, mowerId, function(error, mowingSessionId) {
+        mowingSessionInterface.createMowingSession(mowerPositions, mowerId, function(error, mowingSessionId) {
 
             if (error.length == 0) {
                 res.status(200).json(mowingSessionId)
@@ -25,13 +25,15 @@ module.exports = function({ mowingSessionInterface }) {
     /* Add new positions to mowing session */
     router.put('/', function(req, res) {
 
-        let mowingSessionId = req.body.mowingSessionId
-        let newMowerPositions = req.body.newMowerPositions
+        let mowingSessionId = parseInt(req.body.mowingSessionId)
+        console.log("mowingSessionId: "+mowingSessionId)
+        let mowerPositions = req.body.mowerPositions
+        console.log("mowerPositions: "+mowerPositions)
 
-        mowingSessionInterface.addMowerPositions(mowingSessionId, newMowerPositions, function(error, mowerPositions) {
+        mowingSessionInterface.addMowerPositions(mowingSessionId, mowerPositions, function(error, theMowerPositions) {
 
             if (error.length == 0) {
-                res.status(200).json(mowerPositions)
+                res.status(200).json(theMowerPositions)
             } else {
                 res.status(400).json(error)
             }
