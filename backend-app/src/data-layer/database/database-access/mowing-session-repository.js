@@ -35,7 +35,7 @@ module.exports = function({ db }) {
                 where: { mowingSessionId: mowingSessionId },
                 raw: true
             })
-            .then(positions => callback([], positions.mowerPositions))
+            .then(mowerPositions => callback([], mowerPositions.mowerPositions))
             .catch(e => {
                 console.log(e)
                 callback(e, [])
@@ -55,7 +55,25 @@ module.exports = function({ db }) {
                 where: { mowerId: mowerId },
                 raw: true
             })
-            .then(mowerPositions => callback([], mowerPositions))
+            .then(mowerPositions => callback([], mowerPositions.mowerPositions))
+            .catch(e => {
+                console.log(e)
+                callback(e, [])
+            })
+
+    }
+
+
+
+
+    /* To get mowingSession by mowingSessionId */
+    exports.getMowingSessionByMowingSessionId = function(mowingSessionId, callback) {
+
+        db.MowingSessions.findOne({
+                where: { mowingSessionId: mowingSessionId },
+                raw: true
+            })
+            .then(mowingSession => callback([], mowingSession))
             .catch(e => {
                 console.log(e)
                 callback(e, [])
