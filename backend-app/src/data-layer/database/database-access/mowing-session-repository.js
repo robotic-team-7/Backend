@@ -49,13 +49,27 @@ module.exports = function({ db }) {
 
 
     /* To get mowerPositions by mowerId */
-    exports.getMowerPositionsByMowerId = function(mowerId, callback) {
+    exports.getAllMowingSessionsByMowerId = function(mowerId, callback) {
 
         db.MowingSessions.findAll({
                 where: { mowerId: mowerId },
                 raw: true
             })
             .then(mowerPositions => callback([], mowerPositions))
+            .catch(e => {
+                console.log(e)
+                callback(e, [])
+            })
+
+    }
+
+    exports.getMowingSessionByMowingSessionId = function(mowingSessionId, callback) {
+
+        db.MowingSessions.findOne({
+                where: { mowingSessionId: mowingSessionId },
+                raw: true
+            })
+            .then(mowingSession => callback([], mowingSession))
             .catch(e => {
                 console.log(e)
                 callback(e, [])
