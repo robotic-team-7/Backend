@@ -81,6 +81,7 @@ module.exports = function({ db }) {
 
     }
 
+    /* To get mowingSession by mowingSessionId */
     exports.getMowingSessionByMowingSessionId = function(mowingSessionId, callback) {
 
         db.MowingSessions.findOne({
