@@ -45,7 +45,7 @@ module.exports = function({ mowerInterface, mowingSessionInterface }) {
     })
 
     //Get specific mowingSession by mowingsessionID
-    router.get('/mowerSessionPositions/:mowingSessionId', function(request, response) {
+    router.get('/mowingSession/:mowingSessionId', function(request, response) {
         const mowingSessionID = request.params.mowingSessionId
         mowingSessionInterface.getMowingSessionByMowingSessionId(mowingSessionID, function(error, mowingSession) {
             if (error.length == 0 && mowingSession.length == 0) {
@@ -93,9 +93,9 @@ module.exports = function({ mowerInterface, mowingSessionInterface }) {
         const mowerID = request.params.mowerId
         mowerInterface.deleteMower(mowerID, function(error, mowerDeleted) {
             if (error.length == 0 && mowerDeleted) {
-                response.status(204).json()
+                response.status(200).json(mowerDeleted)
             } else if (error.length == 0 && !mowerDeleted) {
-                response.status(404).json()
+                response.status(404).json(mowingSessionDeleted)
             } else {
                 response.status(500).json(error)
             }
@@ -106,9 +106,9 @@ module.exports = function({ mowerInterface, mowingSessionInterface }) {
         const mowingSessionID = request.params.mowingSessionId
         mowingSessionInterface.deleteMowingSession(mowingSessionID, function(error, mowingSessionDeleted) {
             if (error.length == 0 && mowingSessionDeleted) {
-                response.status(204).json()
+                response.status(200).json(mowingSessionDeleted)
             } else if (error.length == 0 && !mowingSessionDeleted) {
-                response.status(404).json()
+                response.status(404).json(mowingSessionDeleted)
             } else {
                 response.status(500).json(error)
             }

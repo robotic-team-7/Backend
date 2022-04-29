@@ -25,7 +25,7 @@ module.exports = function({ mowingSessionRepository, dbError, mowingSessionValid
 
 
 
-    /* To get mowerPositions by mowingSessionId */
+    /* To add Mower Positions by mowingSessionId */
     exports.addMowerPositions = function(mowingSessionId, newMowerPositions, callback) {
         const validationErrors = mowingSessionValidation.addMowerPositionsValidation(mowingSessionId, newMowerPositions)
         if (validationErrors.length > 0) {
@@ -83,7 +83,7 @@ module.exports = function({ mowingSessionRepository, dbError, mowingSessionValid
     }
 
 
-
+    /* To get mowingSession by mowingSessionId */
     exports.getMowingSessionByMowingSessionId = function(mowingSessionId, callback) {
         const validationErrors = mowingSessionValidation.getMowingSessionByMowingSessionIdValidation(mowingSessionId)
         if (validationErrors.length > 0) {
