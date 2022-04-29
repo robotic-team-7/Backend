@@ -1,3 +1,4 @@
+require('dotenv').config({ path: __dirname + '/.env' })
 const awilix = require('awilix')
 const container = awilix.createContainer()
 
