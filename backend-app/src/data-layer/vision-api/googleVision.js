@@ -2,7 +2,7 @@
     const vision = require('@google-cloud/vision');
 
     // Creates a client
-    const client = new vision.ImageAnnotatorClient({ keyFilename: "/backend-app/src/data-layer/vision-api/teak-truck-348313-4d9f82ccb123.json" });
+    const client = new vision.ImageAnnotatorClient({ keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS });
 
     module.exports = function({}) {
 
