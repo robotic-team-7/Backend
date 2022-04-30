@@ -15,7 +15,7 @@ The backend uses a number of open source projects to work properly:
 ## To start the app
 Navigate to /backend folder and run following command:
 ```
-docker-compose up
+docker-compose up --build
 ```
 The app is now running on localhost:8080
 
