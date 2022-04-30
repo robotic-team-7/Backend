@@ -70,7 +70,7 @@ try {
             type: DataTypes.STRING,
             allowNull: true
         },
-        ObstaclePosition: {
+        obstaclePosition: {
             type: DataTypes.JSON,
             allowNull: false
         },
