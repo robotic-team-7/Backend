@@ -1,5 +1,6 @@
 /* To access MowingSession table in the database*/
 
+
 module.exports = function({ db }) {
 
     const exports = {}
@@ -55,7 +56,7 @@ module.exports = function({ db }) {
                 where: { mowerId: mowerId },
                 raw: true
             })
-            .then(mowerPositions => callback([], mowerPositions.mowerPositions))
+            .then(mowingSessions => callback([], mowingSessions))
             .catch(e => {
                 console.log(e)
                 callback(e, [])
@@ -109,7 +110,14 @@ module.exports = function({ db }) {
                 returning: true,
                 raw: true
             })
-            .then(updatedMowerPositions => callback([], updatedMowerPositions[1][0].mowerPositions))
+            .then(updatedMowerPositions => {
+                if (updatedMowerPositions[0] == 0) {
+                    callback([], false)
+                } else {
+                    callback([], true)
+                }
+
+            })
             .catch(e => {
                 console.log(e)
                 callback(e, [])
