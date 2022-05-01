@@ -33,16 +33,18 @@ module.exports = function({ mowerInterface, mowingSessionInterface }) {
         })
     })
 
-    //Start the mower
-    router.put('/start/:mowerId', function(request, response) { //post or put i dont know yet
-        const mowerId = request.params.mowerId
+    /*
+        //Start the mower
+        router.put('/start/:mowerId', function(request, response) { //post or put i dont know yet
+            const mowerId = request.params.mowerId
 
-    })
+        })
 
-    //Stop the mower
-    router.put('/stop/:mowerId', function(request, response) {
-        const mowerId = request.params.mowerId
-    })
+        //Stop the mower
+        router.put('/stop/:mowerId', function(request, response) {
+            const mowerId = request.params.mowerId
+        })
+    */
 
     //Get specific mowingSession by mowingsessionID
     router.get('/mowingSession/:mowingSessionId', function(request, response) {
@@ -58,8 +60,8 @@ module.exports = function({ mowerInterface, mowingSessionInterface }) {
         })
     })
 
-    //Get all mowingSession from one mower by mowerId
-    router.get('/mowerSessions/:mowerId', function(request, response) {
+    //Get all mowingSessions from one mower by mowerId
+    router.get('/mowingSessions/:mowerId', function(request, response) {
         const mowerID = request.params.mowerId
         mowingSessionInterface.getAllMowingSessionsByMowerId(mowerID, function(error, mowingSessions) {
             if (error.length == 0 && mowingSessions.length == 0) {
