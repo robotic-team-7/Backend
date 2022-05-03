@@ -1,6 +1,7 @@
 .DS_Store
 node_modules/
 .env
+keys/
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
@@ -19,3 +20,4 @@ node_modules/
 # Ignore all local history of files
 .history
 .ionide
+
