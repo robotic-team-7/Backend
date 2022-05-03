@@ -25,7 +25,7 @@ module.exports = function({ mowingSessionRepository, dbError, mowingSessionValid
 
 
 
-    /* To get mowerPositions by mowingSessionId */
+    /* To add Mower Positions by mowingSessionId */
     exports.addMowerPositions = function(mowingSessionId, newMowerPositions, callback) {
         const validationErrors = mowingSessionValidation.addMowerPositionsValidation(mowingSessionId, newMowerPositions)
         if (validationErrors.length > 0) {
@@ -42,14 +42,16 @@ module.exports = function({ mowingSessionRepository, dbError, mowingSessionValid
                     if (Object.keys(mowerPositions).length > 0) {
                         mowerPositions.points = mowerPositions.points.concat(newMowerPositions)
                     }
-                    mowingSessionRepository.addMowerPositions(mowingSessionId, mowerPositions, function(error, mowerPositions) {
+                    mowingSessionRepository.addMowerPositions(mowingSessionId, mowerPositions, function(error, mowerPositionsAdded) {
                         if (Object.keys(error).length > 0) {
                             dbError.errorCheck(error, function(errorCode) {
                                 console.log(errorCode)
                                 callback(errorCode, [])
                             })
                         } else {
-                            callback([], mowerPositions)
+
+                            callback([], mowerPositionsAdded)
+
                         }
                     })
                 }
@@ -63,7 +65,7 @@ module.exports = function({ mowingSessionRepository, dbError, mowingSessionValid
 
 
 
-    /* To get mowerPositions by mowerId */
+    /* To get all mowing sessions by mowerId */
     exports.getAllMowingSessionsByMowerId = function(mowerId, callback) {
         const validationErrors = mowingSessionValidation.getAllMowingSessionsByMowerIdValidation(mowerId)
         if (validationErrors.length > 0) {
@@ -83,13 +85,13 @@ module.exports = function({ mowingSessionRepository, dbError, mowingSessionValid
     }
 
 
-
+    /* To get mowingSession by mowingSessionId */
     exports.getMowingSessionByMowingSessionId = function(mowingSessionId, callback) {
         const validationErrors = mowingSessionValidation.getMowingSessionByMowingSessionIdValidation(mowingSessionId)
         if (validationErrors.length > 0) {
             callback(validationErrors, [])
         } else {
-            mowingSessionRepository.getMowerPositionsByMowingSessionId(mowingSessionId, function(error, mowingSession) {
+            mowingSessionRepository.getMowingSessionByMowingSessionId(mowingSessionId, function(error, mowingSession) {
                 if (Object.keys(error).length > 0) {
                     dbError.errorCheck(error, function(errorCode) {
                         callback(errorCode, [])

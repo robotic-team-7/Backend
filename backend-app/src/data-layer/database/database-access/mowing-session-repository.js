@@ -1,5 +1,6 @@
 /* To access MowingSession table in the database*/
 
+
 module.exports = function({ db }) {
 
     const exports = {}
@@ -35,7 +36,7 @@ module.exports = function({ db }) {
                 where: { mowingSessionId: mowingSessionId },
                 raw: true
             })
-            .then(positions => callback([], positions.mowerPositions))
+            .then(mowerPositions => callback([], mowerPositions.mowerPositions))
             .catch(e => {
                 console.log(e)
                 callback(e, [])
@@ -55,7 +56,7 @@ module.exports = function({ db }) {
                 where: { mowerId: mowerId },
                 raw: true
             })
-            .then(mowerPositions => callback([], mowerPositions))
+            .then(mowingSessions => callback([], mowingSessions))
             .catch(e => {
                 console.log(e)
                 callback(e, [])
@@ -63,6 +64,25 @@ module.exports = function({ db }) {
 
     }
 
+
+
+
+    /* To get mowingSession by mowingSessionId */
+    exports.getMowingSessionByMowingSessionId = function(mowingSessionId, callback) {
+
+        db.MowingSessions.findOne({
+                where: { mowingSessionId: mowingSessionId },
+                raw: true
+            })
+            .then(mowingSession => callback([], mowingSession))
+            .catch(e => {
+                console.log(e)
+                callback(e, [])
+            })
+
+    }
+
+    /* To get mowingSession by mowingSessionId */
     exports.getMowingSessionByMowingSessionId = function(mowingSessionId, callback) {
 
         db.MowingSessions.findOne({
@@ -90,7 +110,14 @@ module.exports = function({ db }) {
                 returning: true,
                 raw: true
             })
-            .then(updatedMowerPositions => callback([], updatedMowerPositions[1][0].mowerPositions))
+            .then(updatedMowerPositions => {
+                if (updatedMowerPositions[0] == 0) {
+                    callback([], false)
+                } else {
+                    callback([], true)
+                }
+
+            })
             .catch(e => {
                 console.log(e)
                 callback(e, [])

@@ -6,8 +6,8 @@ module.exports = function({}) {
     exports.createMowerValidation = function(userId, serialNumber, status) {
         const validationErrors = []
 
-        // Check if the userId is an integer
-        if (isNaN(parseInt(userId)) == true) {
+        // Check if the userId is a string
+        if (typeof userId !== 'string') {
             validationErrors.push('invalidDataType')
         }
 
@@ -17,12 +17,17 @@ module.exports = function({}) {
             validationErrors.push('invalidDataType')
         }
 
-        // Check if the status is a boolean
-        if (typeof status != 'boolean') {
-            console.log(typeof status)
-            validationErrors.push('invalidDataType')
-        }
+        // Check if the status is valid
 
+        switch (status) {
+            case "start bt":
+            case "start auto":
+            case "stop":
+                break;
+            default:
+                validationErrors.push('invalidStatus')
+                break;
+        }
         return validationErrors
     }
 
@@ -48,8 +53,8 @@ module.exports = function({}) {
 
         const validationErrors = []
 
-        // Check if the userId is an integer
-        if (isNaN(parseInt(userId)) == true) {
+        // Check if the userId is a string
+        if (typeof userId !== 'string') {
             validationErrors.push('invalidDataType')
         }
         return validationErrors
@@ -68,11 +73,17 @@ module.exports = function({}) {
             validationErrors.push('invalidDataType')
         }
 
-        // Check if the status is a boolean
-        if (typeof status !== 'boolean') {
-            console.log(typeof status)
-            validationErrors.push('invalidDataType')
+        // Check if the status is valid
+        switch (status) {
+            case "start bt":
+            case "start auto":
+            case "stop":
+                break;
+            default:
+                validationErrors.push('invalidStatus')
+                break;
         }
+
         return validationErrors
     }
 

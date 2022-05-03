@@ -20,7 +20,7 @@ try {
             allowNull: false
         },
         userId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false
         },
         serialNumber: {
@@ -30,7 +30,7 @@ try {
         },
         status: {
             primaryKey: true,
-            type: DataTypes.BOOLEAN,
+            type: DataTypes.STRING,
             allowNull: false
         },
     }, {
@@ -49,6 +49,15 @@ try {
         mowerPositions: {
             type: DataTypes.JSON,
             allowNull: false
+        },
+        mowerId: {
+            type: Sequelize.INTEGER,
+            onDelete: "CASCADE",
+            references: {
+                model: "Mowers",
+                key: "mowerId",
+                as: "mowerId",
+            },
         },
     }, {
         timestamps: true,
@@ -70,7 +79,7 @@ try {
             type: DataTypes.STRING,
             allowNull: true
         },
-        ObstaclePosition: {
+        obstaclePosition: {
             type: DataTypes.JSON,
             allowNull: false
         },
@@ -78,26 +87,38 @@ try {
             type: DataTypes.STRING,
             allowNull: true
         },
+        mowingSessionId: {
+            type: Sequelize.INTEGER,
+            onDelete: "CASCADE",
+            references: {
+                model: "MowingSessions",
+                key: "mowingSessionId",
+                as: "mowingSessionId",
+            },
+        },
+
     }, {
         timestamps: false
     });
 
     /* Table relations */
 
-    // Adds mowerId to MowingSessions table
-    MowingSessions.belongsTo(Mowers, { foreignKey: 'mowerId', onDelete: 'cascade' })
+    // Relates mowerId to MowingSessions table
+    Mowers.hasMany(MowingSessions, { foreignKey: 'mowerId', onDelete: 'CASCADE', hooks: true })
+    MowingSessions.belongsTo(Mowers, { foreignKey: 'mowerId', onDelete: 'CASCADE' })
 
-    // Adds mowingSessionsId to Obstacles table
-    Obstacles.belongsTo(MowingSessions, { foreignKey: 'mowingSessionsId', onDelete: 'cascade' })
+    // Relates mowingSessionsId to Obstacles table
+    MowingSessions.hasMany(Obstacles, { foreignKey: 'mowingSessionId', onDelete: 'CASCADE', hooks: true })
+    Obstacles.belongsTo(MowingSessions, { foreignKey: 'mowingSessionId', onDelete: 'CASCADE' })
 
 
     /* Syncs all tables with the databse */
     sequelize.sync({ force: true }).then(function() {
 
         Mowers.create({
-            userId: 1,
+            userId: "a404db06-54a7-4715-9a6e-99cf6e1ccf4f",
             serialNumber: "abc123",
-            status: false
+            status: "stop"
         })
         MowingSessions.create({
             mowerId: 1,
@@ -108,6 +129,13 @@ try {
                 ]
 
             }
+        })
+        Obstacles.create({
+            mowerId: 1,
+            imageClassification: 'cat',
+            obstaclePosition: [53.33, 44.33],
+            imagePath: '/somewhere/image',
+            mowingSessionId: 1
         })
     })
 
