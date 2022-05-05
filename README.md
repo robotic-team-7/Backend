@@ -15,7 +15,7 @@ The backend uses a number of open source projects to work properly:
 ## To start the app
 Navigate to /backend folder and run following command:
 ```
-docker-compose up
+docker-compose up --build
 ```
 The app is now running on localhost:8080
 
@@ -39,6 +39,7 @@ npm install <package name>
 | `invalidDataType`          | Thrown when a invalid data type is sent to the backend, e.g. the backend expects a Int but got a string| 
 | `notAnArray`               | Thrown when the backend expects an array as an input, e.g. [ ]    | 
 | `invalidDataTypeInArray`   | Thrown when the data type in the array is not a number |
+| `invalidStatus`     | Thrown when the status is not "start bt" or "start auto" or "stop"  |
 ### Database error codes
 |           Code             |                                Reason                               |   
 | -------------------------  | ------------------------------------------------------------------- |

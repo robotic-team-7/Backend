@@ -1,15 +1,17 @@
 /* To access MowingSession table in the database*/
 
+
 module.exports = function({ db }) {
 
     const exports = {}
 
     /* To create a mowingSession */
-    exports.createMowingSession = function(mowerPositions, mowerId, callback) {
+    exports.createMowingSession = function(userId, mowerPositions, mowerId, callback) {
 
 
         const mowingSession = {
             mowerId: mowerId,
+            userId: userId,
             mowerPositions: {
                 points: mowerPositions
 
@@ -29,13 +31,16 @@ module.exports = function({ db }) {
 
 
     /* To get mowerPositions by mowingSessionId */
-    exports.getMowerPositionsByMowingSessionId = function(mowingSessionId, callback) {
+    exports.getMowerPositionsByMowingSessionId = function(userId, mowingSessionId, callback) {
 
-        db.MowingSessions.findOne({
-                where: { mowingSessionId: mowingSessionId },
+        db.MowingSessions.findAll({
+                where: {
+                    mowingSessionId: mowingSessionId,
+                    userId: userId
+                },
                 raw: true
             })
-            .then(positions => callback([], positions.mowerPositions))
+            .then(mowerPositions => callback([], mowerPositions[0].mowerPositions))
             .catch(e => {
                 console.log(e)
                 callback(e, [])
@@ -49,13 +54,55 @@ module.exports = function({ db }) {
 
 
     /* To get mowerPositions by mowerId */
-    exports.getMowerPositionsByMowerId = function(mowerId, callback) {
+    exports.getAllMowingSessionsByMowerId = function(userId, mowerId, callback) {
 
         db.MowingSessions.findAll({
-                where: { mowerId: mowerId },
+                where: {
+                    mowerId: mowerId,
+                    userId: userId
+                },
                 raw: true
             })
-            .then(mowerPositions => callback([], mowerPositions))
+            .then(mowingSessions => callback([], mowingSessions))
+            .catch(e => {
+                console.log(e)
+                callback(e, [])
+            })
+
+    }
+
+
+
+
+    /* To get mowingSession by mowingSessionId */
+    exports.getMowingSessionByMowingSessionId = function(userId, mowingSessionId, callback) {
+
+        db.MowingSessions.findAll({
+                where: {
+                    mowingSessionId: mowingSessionId,
+                    userId: userId
+                },
+                raw: true
+            })
+            .then(mowingSession => callback([], mowingSession))
+            .catch(e => {
+                console.log(e)
+                callback(e, [])
+            })
+
+    }
+
+    /* To get mowingSession by mowingSessionId */
+    exports.getMowingSessionByMowingSessionId = function(userId, mowingSessionId, callback) {
+
+        db.MowingSessions.findAll({
+                where: {
+                    mowingSessionId: mowingSessionId,
+                    userId: userId
+                },
+                raw: true
+            })
+            .then(mowingSession => callback([], mowingSession))
             .catch(e => {
                 console.log(e)
                 callback(e, [])
@@ -67,16 +114,24 @@ module.exports = function({ db }) {
 
 
     /* To add mowerPositions */
-    exports.addMowerPositions = function(mowingSessionId, mowerPositions, callback) {
-
+    exports.addMowerPositions = function(userId, mowingSessionId, mowerPositions, callback) {
         db.MowingSessions.update({
                 mowerPositions: mowerPositions
             }, {
-                where: { mowingSessionId: mowingSessionId },
-                returning: true,
+                where: {
+                    mowingSessionId: mowingSessionId,
+                    userId: userId
+                },
                 raw: true
             })
-            .then(updatedMowerPositions => callback([], updatedMowerPositions[1][0].mowerPositions))
+            .then(updatedMowerPositions => {
+                if (updatedMowerPositions[0] == 0) {
+                    callback([], false)
+                } else {
+                    callback([], true)
+                }
+
+            })
             .catch(e => {
                 console.log(e)
                 callback(e, [])
@@ -87,10 +142,13 @@ module.exports = function({ db }) {
 
 
     /* To delete MowingSession */
-    exports.deleteMowingSession = function(mowingSessionId, callback) {
+    exports.deleteMowingSession = function(userId, mowingSessionId, callback) {
 
         db.MowingSessions.destroy({
-                where: { mowingSessionId: mowingSessionId },
+                where: {
+                    mowingSessionId: mowingSessionId,
+                    userId: userId
+                },
                 raw: true
             })
             .then(numberOfDeletedMowingSessions => {

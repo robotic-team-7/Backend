@@ -3,10 +3,15 @@ module.exports = function({}) {
     const exports = {}
 
     /* Validates parameters of createMowingSession */
-    exports.createMowingSessionValidation = function(mowerPositions, mowerId) {
+    exports.createMowingSessionValidation = function(userId, mowerPositions, mowerId) {
 
         const validationErrors = []
 
+        // Check if the userId is a string
+        if (typeof userId !== 'string') {
+            console.log(typeof mowerId)
+            validationErrors.push('invalidDataType')
+        }
         // Check if the mowerPositions is a array
         if (mowerPositions instanceof Array == false) {
             validationErrors.push('notAnArray')
@@ -21,11 +26,11 @@ module.exports = function({}) {
             }
         }
 
-        // Check if the mowerId is an integer
-        if (Number.isInteger(mowerId) == false) {
+        // Check if the mowerId is a string
+        if (typeof mowerId !== 'string') {
+            console.log(typeof mowerId)
             validationErrors.push('invalidDataType')
         }
-
         return validationErrors
     }
 
@@ -33,10 +38,15 @@ module.exports = function({}) {
 
 
     /* Validates parameters of addMowerPositions */
-    exports.addMowerPositionsValidation = function(mowingSessionId, newMowerPositions) {
+    exports.addMowerPositionsValidation = function(userId, mowingSessionId, newMowerPositions) {
 
         const validationErrors = []
 
+        // Check if the userId is a string
+        if (typeof userId !== 'string') {
+            console.log(typeof mowerId)
+            validationErrors.push('invalidDataType')
+        }
         // Check if the mowerPositions is a array
         if (newMowerPositions instanceof Array == false) {
             validationErrors.push('notAnArray')
@@ -52,7 +62,7 @@ module.exports = function({}) {
         }
 
         // Check if the mowingSessionId is an integer
-        if (Number.isInteger(mowingSessionId) == false) {
+        if (isNaN(parseInt(mowingSessionId)) == true) {
             validationErrors.push('invalidDataType')
         }
 
@@ -63,15 +73,20 @@ module.exports = function({}) {
 
 
     /* Validates parameters of getMowerPositionsByMowerId */
-    exports.getMowerPositionsByMowerIdValidation = function(mowerId) {
+    exports.getAllMowingSessionsByMowerIdValidation = function(userId, mowerId) {
 
         const validationErrors = []
 
-        // Check if the mowerId is an integer
-        if (Number.isInteger(mowerId) == false) {
+        // Check if the userId is a string
+        if (typeof userId !== 'string') {
+            console.log(typeof mowerId)
             validationErrors.push('invalidDataType')
         }
-
+        // Check if the mowerId is a string
+        if (typeof mowerId !== 'string') {
+            console.log(typeof mowerId)
+            validationErrors.push('invalidDataType')
+        }
         return validationErrors
 
     }
@@ -80,12 +95,32 @@ module.exports = function({}) {
 
 
     /* Validates parameters of deletePositionData */
-    exports.deletePositionDataValidation = function(mowingSessionId) {
+    exports.deleteMowingSessionValidation = function(userId, mowingSessionId) {
 
         const validationErrors = []
 
-        // Check if the mowerId is an integer
-        if (Number.isInteger(mowingSessionId) == false) {
+        // Check if the userId is a string
+        if (typeof userId !== 'string') {
+            console.log(typeof mowerId)
+            validationErrors.push('invalidDataType')
+        }
+        // Check if the mowingSessionId is an integer
+        if (isNaN(parseInt(mowingSessionId)) == true) {
+            validationErrors.push('invalidDataType')
+        }
+
+        return validationErrors
+    }
+
+    exports.getMowingSessionByMowingSessionIdValidation = function(userId, mowingSessionId) {
+        const validationErrors = []
+
+        // Check if the userId is a string
+        if (typeof userId !== 'string') {
+            console.log(typeof mowerId)
+            validationErrors.push('invalidDataType')
+        }
+        if (isNaN(parseInt(mowingSessionId)) == true) {
             validationErrors.push('invalidDataType')
         }
 

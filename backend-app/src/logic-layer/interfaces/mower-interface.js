@@ -23,15 +23,13 @@ module.exports = function({ mowerRepository, dbError, mowerValidation }) {
 
 
 
-
-
     /* To get a mower by mowerId */
-    exports.getMowerByMowerId = function(mowerId, callback) {
-        const validationErrors = mowerValidation.getMowerByMowerIdValidation(mowerId)
+    exports.getMowerByMowerId = function(userId, mowerId, callback) {
+        const validationErrors = mowerValidation.getMowerByMowerIdValidation(userId, mowerId)
         if (validationErrors.length > 0) {
             callback(validationErrors, [])
         } else {
-            mowerRepository.getMowerByMowerId(mowerId, function(error, mower) {
+            mowerRepository.getMowerByMowerId(userId, mowerId, function(error, mower) {
                 if (Object.keys(error).length > 0) {
                     dbError.errorCheck(error, function(errorCode) {
                         console.log(errorCode)
@@ -70,12 +68,12 @@ module.exports = function({ mowerRepository, dbError, mowerValidation }) {
 
 
     /* To update mower status */
-    exports.updateMowerStatus = function(mowerId, status, callback) {
-        const validationErrors = mowerValidation.updateMowerStatusValidation(mowerId, status)
+    exports.updateMowerStatus = function(userId, mowerId, status, callback) {
+        const validationErrors = mowerValidation.updateMowerStatusValidation(userId, mowerId, status)
         if (validationErrors.length > 0) {
             callback(validationErrors, [])
         } else {
-            mowerRepository.updateMowerStatus(mowerId, status, function(error, newMowerStaus) {
+            mowerRepository.updateMowerStatus(userId, mowerId, status, function(error, newMowerStaus) {
                 if (Object.keys(error).length > 0) {
                     dbError.errorCheck(error, function(errorCode) {
                         console.log(errorCode)
@@ -93,12 +91,12 @@ module.exports = function({ mowerRepository, dbError, mowerValidation }) {
 
 
     /* To delete a mower */
-    exports.deleteMower = function(mowerId, callback) {
-        const validationErrors = mowerValidation.deleteMowerValidation(mowerId)
+    exports.deleteMower = function(userId, mowerId, callback) {
+        const validationErrors = mowerValidation.deleteMowerValidation(userId, mowerId)
         if (validationErrors.length > 0) {
             callback(validationErrors, [])
         } else {
-            mowerRepository.deleteMower(mowerId, function(error, mowerDeleted) {
+            mowerRepository.deleteMower(userId, mowerId, function(error, mowerDeleted) {
                 if (Object.keys(error).length > 0) {
                     dbError.errorCheck(error, function(errorCode) {
                         console.log(errorCode)
