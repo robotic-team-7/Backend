@@ -3,7 +3,7 @@ module.exports = function({}) {
     const exports = {}
 
     /* Validates parameters of createMower */
-    exports.createMowerValidation = function(userId, serialNumber, status) {
+    exports.createMowerValidation = function(userId, mowerId, status) {
         const validationErrors = []
 
         // Check if the userId is a string
@@ -11,9 +11,9 @@ module.exports = function({}) {
             validationErrors.push('invalidDataType')
         }
 
-        // Check if the serialNumber is a string
-        if (typeof serialNumber !== 'string') {
-            console.log(typeof serialNumber)
+        // Check if the mowerId is a string
+        if (typeof mowerId !== 'string') {
+            console.log(typeof mowerId)
             validationErrors.push('invalidDataType')
         }
 
@@ -35,11 +35,18 @@ module.exports = function({}) {
 
 
     /* Validates parameters of getMowerByMowerId */
-    exports.getMowerByMowerIdValidation = function(mowerId) {
+    exports.getMowerByMowerIdValidation = function(userId, mowerId) {
 
         const validationErrors = []
-            // Check if the mowerId is an integer
-        if (isNaN(parseInt(mowerId)) == true) {
+
+        // Check if the userId is a string
+        if (typeof userId !== 'string') {
+            validationErrors.push('invalidDataType')
+        }
+        // Check if the mowerId is a string
+
+        if (typeof mowerId !== 'string') {
+            console.log(typeof mowerId)
             validationErrors.push('invalidDataType')
         }
         return validationErrors
@@ -57,6 +64,10 @@ module.exports = function({}) {
         if (typeof userId !== 'string') {
             validationErrors.push('invalidDataType')
         }
+        // Check if the userId is a string
+        if (typeof userId !== 'string') {
+            validationErrors.push('invalidDataType')
+        }
         return validationErrors
 
     }
@@ -65,11 +76,17 @@ module.exports = function({}) {
 
 
     /* Validates parameters of updateMowerStatus */
-    exports.updateMowerStatusValidation = function(mowerId, status) {
+    exports.updateMowerStatusValidation = function(userId, mowerId, status) {
 
         const validationErrors = []
-            // Check if the mowerId is an integer
-        if (isNaN(parseInt(mowerId)) == true) {
+
+        // Check if the userId is a string
+        if (typeof userId !== 'string') {
+            validationErrors.push('invalidDataType')
+        }
+        // Check if the mowerId is a string
+        if (typeof mowerId !== 'string') {
+            console.log(typeof mowerId)
             validationErrors.push('invalidDataType')
         }
 
@@ -91,12 +108,19 @@ module.exports = function({}) {
 
 
     /* Validates parameters of deleteMower */
-    exports.deleteMowerValidation = function(mowerId) {
+    exports.deleteMowerValidation = function(userId, mowerId) {
 
         const validationErrors = []
 
-        // Check if the mowerId is an integer
-        if (isNaN(parseInt(mowerId)) == true) {
+        // Check if the userId is a string
+        if (typeof userId !== 'string') {
+            validationErrors.push('invalidDataType')
+        }
+
+        // Check if the mowerId is a string
+
+        if (typeof mowerId !== 'string') {
+            console.log(typeof mowerId)
             validationErrors.push('invalidDataType')
         }
 
