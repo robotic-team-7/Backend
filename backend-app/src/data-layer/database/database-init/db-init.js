@@ -2,7 +2,7 @@
 const { Sequelize, DataTypes } = require('sequelize')
 
 /* Establishes connection with the database */
-const sequelize = new Sequelize('postgres://postgres:mower123@local-db:5432/mower')
+const sequelize = new Sequelize(process.env.POSTGRES_CONNECTION)
 
 /* Checks if the connection was successful */
 try {
@@ -14,17 +14,11 @@ try {
     const Mowers = sequelize.define('Mowers', {
         mowerId: {
             primaryKey: true,
-            autoIncrement: true,
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             unique: true,
             allowNull: false
         },
         userId: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        serialNumber: {
-            unique: true,
             type: DataTypes.STRING,
             allowNull: false
         },
@@ -46,12 +40,16 @@ try {
             unique: true,
             allowNull: false
         },
+        userId: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         mowerPositions: {
             type: DataTypes.JSON,
             allowNull: false
         },
         mowerId: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.STRING,
             onDelete: "CASCADE",
             references: {
                 model: "Mowers",
@@ -73,6 +71,10 @@ try {
             autoIncrement: true,
             type: DataTypes.INTEGER,
             unique: true,
+            allowNull: false
+        },
+        userId: {
+            type: DataTypes.STRING,
             allowNull: false
         },
         imageClassification: {
@@ -117,11 +119,12 @@ try {
 
         Mowers.create({
             userId: "a404db06-54a7-4715-9a6e-99cf6e1ccf4f",
-            serialNumber: "abc123",
+            mowerId: "abc123",
             status: "stop"
         })
         MowingSessions.create({
-            mowerId: 1,
+            mowerId: "abc123",
+            userId: "a404db06-54a7-4715-9a6e-99cf6e1ccf4f",
             mowerPositions: {
                 points: [
                     [53.33, 44.33],
@@ -131,7 +134,8 @@ try {
             }
         })
         Obstacles.create({
-            mowerId: 1,
+            mowerId: "abc123",
+            userId: "a404db06-54a7-4715-9a6e-99cf6e1ccf4f",
             imageClassification: 'cat',
             obstaclePosition: [53.33, 44.33],
             imagePath: '/somewhere/image',

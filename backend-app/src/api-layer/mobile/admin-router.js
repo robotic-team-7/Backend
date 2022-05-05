@@ -7,8 +7,6 @@ const AdminCognitoService = require('./services/cognito.admin.config')
 
 // Put in .env variable?
 const checkIfAdmin = jwtAuthz(['Admins'], { customScopeKey: 'cognito:groups' });
-const region = 'eu-north-1';
-const adminUserPoolId = 'eu-west-1_1fWIOF9Yf';
 
 const checkJwt = jwt({
     // Dynamically provide a signing key
@@ -18,12 +16,12 @@ const checkJwt = jwt({
         cache: true,
         rateLimit: true,
         jwksRequestsPerMinute: 5,
-        jwksUri: `https://cognito-idp.${region}.amazonaws.com/${adminUserPoolId}/.well-known/jwks.json`,
+        jwksUri: process.env.JWK,
         // jwksUri: `https://dev-t3vri3ge.us.auth0.com/.well-known/jwks.json`
     }),
 
     // Validate the audience and the issuer.
-    // audience: 'flexicharge.app',
+
     issuer: [`https://dev-t3vri3ge.us.auth0.com/`, 'https://cognito-idp.eu-west-1.amazonaws.com/eu-west-1_1fWIOF9Yf'],
     algorithms: ['RS256']
 });
