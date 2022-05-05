@@ -1,6 +1,12 @@
 /* Mowing session router */
 
 const express = require("express")
+const jwt = require('jsonwebtoken');
+const jwkToPem = require('jwk-to-pem')
+const fs = require('fs')
+const rawData = fs.readFileSync(process.env.JWK_KEY_PATH)
+const jwk = JSON.parse(rawData)
+const pem = jwkToPem(jwk.keys[1])
 
 module.exports = function({ mowingSessionInterface }) {
 
@@ -11,13 +17,20 @@ module.exports = function({ mowingSessionInterface }) {
 
         let mowerPositions = req.body.mowerPositions
         let mowerId = req.body.mowerId
-
-        mowingSessionInterface.createMowingSession(mowerPositions, mowerId, function(error, mowingSessionId) {
-
-            if (error.length == 0) {
-                res.status(200).json(mowingSessionId)
+        const authorizationHeader = req.header("Authorization")
+        const accessToken = authorizationHeader.substring("Bearer ".length)
+        jwt.verify(accessToken, pem, { algorithms: ['RS256'] }, function(error, payload) {
+            if (error != null) {
+                res.status(401).end()
             } else {
-                res.status(400).json(error)
+                mowingSessionInterface.createMowingSession(payload.sub, mowerPositions, mowerId, function(error, mowingSessionId) {
+
+                    if (error.length == 0) {
+                        res.status(200).json(mowingSessionId)
+                    } else {
+                        res.status(400).json(error)
+                    }
+                })
             }
         })
     })
@@ -27,13 +40,20 @@ module.exports = function({ mowingSessionInterface }) {
 
         let mowingSessionId = req.body.mowingSessionId
         let newMowerPositions = req.body.newMowerPositions
-
-        mowingSessionInterface.addMowerPositions(mowingSessionId, newMowerPositions, function(error, mowerPositions) {
-
-            if (error.length == 0) {
-                res.status(200).json(mowerPositions)
+        const authorizationHeader = req.header("Authorization")
+        const accessToken = authorizationHeader.substring("Bearer ".length)
+        jwt.verify(accessToken, pem, { algorithms: ['RS256'] }, function(error, payload) {
+            if (error != null) {
+                res.status(401).end()
             } else {
-                res.status(400).json(error)
+                mowingSessionInterface.addMowerPositions(payload.sub, mowingSessionId, newMowerPositions, function(error, mowerPositions) {
+
+                    if (error.length == 0) {
+                        res.status(200).json(mowerPositions)
+                    } else {
+                        res.status(400).json(error)
+                    }
+                })
             }
         })
     })
