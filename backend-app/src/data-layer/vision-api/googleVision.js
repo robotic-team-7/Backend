@@ -8,15 +8,15 @@
 
         const exports = {}
 
-        exports.defineImage = function(callback) {
-
-            client.labelDetection('https://images.squarespace-cdn.com/content/v1/564b82fde4b09d9458f0692b/1551984039765-62R6PHBJX59UA5FANUZZ/Ferr-.488-Pista-comp+148.jpg')
+        exports.defineImage = function(imagePath, callback) {
+            console.log(imagePath)
+            client.labelDetection(imagePath)
                 .then((results) => {
                     const labels = results[0].labelAnnotations
                     console.log('Labels:');
-                    labels.forEach(label => console.log(label.description));
-
-                    callback([], labels)
+                    //labels.forEach(label => console.log(label.description));
+                    //console.log(labels)
+                    callback([], labels[0].description)
 
                 })
                 .catch((error) => callback(error, []));

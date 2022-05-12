@@ -53,7 +53,7 @@ module.exports = function({ db }) {
 
 
 
-    /* To get mowerPositions by mowerId */
+    /* To get mowing sessions by mowerId */
     exports.getAllMowingSessionsByMowerId = function(userId, mowerId, callback) {
 
         db.MowingSessions.findAll({
@@ -74,23 +74,7 @@ module.exports = function({ db }) {
 
 
 
-    /* To get mowingSession by mowingSessionId */
-    exports.getMowingSessionByMowingSessionId = function(userId, mowingSessionId, callback) {
 
-        db.MowingSessions.findAll({
-                where: {
-                    mowingSessionId: mowingSessionId,
-                    userId: userId
-                },
-                raw: true
-            })
-            .then(mowingSession => callback([], mowingSession))
-            .catch(e => {
-                console.log(e)
-                callback(e, [])
-            })
-
-    }
 
     /* To get mowingSession by mowingSessionId */
     exports.getMowingSessionByMowingSessionId = function(userId, mowingSessionId, callback) {
@@ -100,7 +84,14 @@ module.exports = function({ db }) {
                     mowingSessionId: mowingSessionId,
                     userId: userId
                 },
-                raw: true
+                include: [{
+                    model: db.Obstacles,
+                    attributes: ['obstacleId', 'imagePath', 'obstaclePosition', 'imageClassification'],
+                    required: false,
+
+                }],
+
+
             })
             .then(mowingSession => callback([], mowingSession))
             .catch(e => {

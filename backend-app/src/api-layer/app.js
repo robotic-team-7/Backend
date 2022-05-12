@@ -4,7 +4,7 @@ const mobileRouter = require("./mobile/mobile-router");
 const app = express()
 
 
-module.exports = function({ mobileRouter, mowerRouter, imageRouter, mowingSessionRouter, authenticationRouter }) {
+module.exports = function({ mobileRouter, mowerRouter, obstacleRouter, mowingSessionRouter, authenticationRouter }) {
     app.use(bodyParser.json())
 
 
@@ -16,7 +16,7 @@ module.exports = function({ mobileRouter, mowerRouter, imageRouter, mowingSessio
 
 
     app.use('/mowers', mowerRouter)
-    app.use('/images', imageRouter)
+    app.use('/obstacle', obstacleRouter)
     app.use('/mowing-sessions', mowingSessionRouter)
     app.use('/mobile', mobileRouter)
     app.use('/auth', authenticationRouter)

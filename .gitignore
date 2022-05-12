@@ -2,6 +2,7 @@
 node_modules/
 .env
 keys/
+key/
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
