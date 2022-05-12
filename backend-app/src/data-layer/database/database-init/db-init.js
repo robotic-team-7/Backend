@@ -90,6 +90,7 @@ try {
             allowNull: true
         },
         mowingSessionId: {
+            foreignKey: true,
             type: Sequelize.INTEGER,
             onDelete: "CASCADE",
             references: {
@@ -112,6 +113,7 @@ try {
     // Relates mowingSessionsId to Obstacles table
     MowingSessions.hasMany(Obstacles, { foreignKey: 'mowingSessionId', onDelete: 'CASCADE', hooks: true })
     Obstacles.belongsTo(MowingSessions, { foreignKey: 'mowingSessionId', onDelete: 'CASCADE' })
+
 
 
     /* Syncs all tables with the databse */
