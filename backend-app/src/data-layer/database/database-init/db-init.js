@@ -138,9 +138,9 @@ try {
         Obstacles.create({
             mowerId: "abc123",
             userId: "a404db06-54a7-4715-9a6e-99cf6e1ccf4f",
-            imageClassification: 'cat',
+            imageClassification: 'Cat',
             obstaclePosition: [53.33, 44.33],
-            imagePath: '/somewhere/image',
+            imagePath: 'https://mower-obstacles.s3.eu-north-1.amazonaws.com/obstacle-1652347989055.jpeg',
             mowingSessionId: 1
         })
     })
