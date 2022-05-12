@@ -6,7 +6,7 @@ container.register({
 
     //api-layer
     mowerRouter: awilix.asFunction(require('./api-layer/mower/mower-router')),
-    imageRouter: awilix.asFunction(require('./api-layer/mower/image-router')),
+    obstacleRouter: awilix.asFunction(require('./api-layer/mower/obstacle-router')),
     mowingSessionRouter: awilix.asFunction(require('./api-layer/mower/mowing-session-router')),
     mobileRouter: awilix.asFunction(require('./api-layer/mobile/mobile-router')),
     authenticationRouter: awilix.asFunction(require('./api-layer/mobile/authentication-router')),
@@ -20,6 +20,7 @@ container.register({
     dbError: awilix.asFunction(require('./logic-layer/error-handling/db-error')),
     mowingSessionValidation: awilix.asFunction(require('./logic-layer/validation/mowing-session-validation')),
     mowerValidation: awilix.asFunction(require('./logic-layer/validation/mower-validation')),
+    obstacleValidation: awilix.asFunction(require('./logic-layer/validation/obstacle-validation')),
 
 
     //data-layer
@@ -28,6 +29,7 @@ container.register({
     mowingSessionRepository: awilix.asFunction(require('./data-layer/database/database-access/mowing-session-repository')),
     obstacleRepository: awilix.asFunction(require('./data-layer/database/database-access/obstacle-repository')),
     googleVision: awilix.asFunction(require('./data-layer/vision-api/googleVision')),
+    s3Bucket: awilix.asFunction(require('./data-layer/file-server/s3-bucket')),
 
     //app
     app: awilix.asFunction(require('./api-layer/app'))
