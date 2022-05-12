@@ -41,7 +41,6 @@ module.exports = function({ obstacleInterface, s3Bucket }) {
                 response.status(401).end()
             } else {
                 obstacleInterface.createObstacle(payload.sub, mowingSessionId, obstaclePosition, imagePath, function(error, created) {
-                    console.log(obstaclePosition)
                     if (error.length == 0) {
                         response.status(201).json(created)
                     } else {
