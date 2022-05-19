@@ -7,28 +7,35 @@ module.exports = function({}) {
     const exports = {}
 
     /* Creates an S3 instance */
-    const imageStorage = new aws.S3({
+    const s3 = new aws.S3({
         accessKeyId: process.env.S3_ACCESS_KEY,
         secretAccessKey: process.env.S3_SECRET_KEY,
         region: process.env.S3_REGION
 
     })
 
-    /* Uploads image to S3 */
+    /* Uploads image to buffer */
+    const multerMemoryStorage = multer.memoryStorage();
+
     const upload = multer({
-        storage: multers3({
-            s3: imageStorage,
-            bucket: process.env.BUCKET_NAME,
-            metadata: function(req, file, cb) {
-                cb(null, { fieldname: file.fieldname })
-            },
-            key: function(req, file, cb) {
-                cb(null, `obstacle-${Date.now()}.jpeg`)
-            }
-        })
+        storage: multerMemoryStorage
     })
 
     exports.upload = upload
+
+
+    /* Uploads image to S3 */
+    exports.uploadS3 = function(req, callback) {
+
+        const uploadParams = {
+            Bucket: process.env.BUCKET_NAME,
+            Body: req.file.buffer,
+            Key: `obstacle-${Date.now()}.jpeg`
+        }
+
+        return s3.upload(uploadParams).promise()
+
+    }
 
 
 
