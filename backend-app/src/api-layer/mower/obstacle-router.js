@@ -30,25 +30,31 @@ module.exports = function({ obstacleInterface, s3Bucket }) {
     const router = express.Router()
 
     /* Add Obstacle */
-    router.post('/add', auth, s3Bucket.upload.single('obstacleImage'), function(request, response) {
-        const imagePath = request.file.location
+    router.post('/add', auth, s3Bucket.upload.single('obstacleImage'), async(request, response) => {
         const mowingSessionId = request.body.mowingSessionId
         const obstaclePosition = request.body.obstaclePosition
         const authorizationHeader = request.header("Authorization")
         const accessToken = authorizationHeader.substring("Bearer ".length)
-        jwt.verify(accessToken, pem, { algorithms: ['RS256'] }, function(error, payload) {
-            if (error != null) {
-                response.status(401).end()
-            } else {
-                obstacleInterface.createObstacle(payload.sub, mowingSessionId, obstaclePosition, imagePath, function(error, created) {
-                    if (error.length == 0) {
-                        response.status(201).json(created)
-                    } else {
-                        response.status(404).json(error)
-                    }
-                })
-            }
-        })
+        const uploadResult = await s3Bucket.uploadS3(request)
+        if (uploadResult.Location == undefined) {
+            response.status(500).end()
+        } else {
+            jwt.verify(accessToken, pem, { algorithms: ['RS256'] }, function(error, payload) {
+                if (error != null) {
+                    response.status(401).end()
+                } else {
+
+                    obstacleInterface.createObstacle(payload.sub, mowingSessionId, obstaclePosition, uploadResult.Location, function(error, created) {
+                        if (error.length == 0) {
+                            response.status(201).json(created)
+                        } else {
+                            response.status(404).json(error)
+                        }
+                    })
+                }
+            })
+        }
+
     })
 
 
