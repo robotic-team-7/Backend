@@ -1,0 +1,16 @@
+name: CI Backend-application
+
+on: push
+
+jobs:
+  ci-backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend-app
+    strategy:
+      matrix:
+        node-version: [17.x]
+    steps:
+    - uses: actions/checkout@v2
+    - run: npm install

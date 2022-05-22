@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.3"
 services:
   backend-app:
     build: ./backend-app
@@ -6,3 +6,4 @@ services:
       - 8080:8080
     volumes:
       - ./backend-app/src:/backend-app/src/
+  
