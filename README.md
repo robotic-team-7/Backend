@@ -1,7 +1,7 @@
 # The Mower Backend 
 
 The mower backend is a backend application which is a communication link between the mower and the mobile application for reading and writing data.
-
+![System architecture ](/documentation/systemArchitecture.png)
 ## Tech
 
 The backend uses a number of open source projects to work properly:
@@ -32,6 +32,8 @@ Step into: "/backend/backend-app" and run following command:
 npm install <package name>
 ```
 ## The API layer 
+- Endpoint documentation can be found here: [Swagger]
+- Documentation for authentication endpoints can be found here: [Swagger-authentication]
 ## The logic layer
 ### Validation error codes
 |           Code             |                                Reason                               |   
@@ -56,8 +58,9 @@ npm install <package name>
 ## License
 
 
- [Awilix]: <https://www.npmjs.com/package/awilix>
-
+   [Awilix]: <https://www.npmjs.com/package/awilix>
+   [Swagger]:<https://app.swaggerhub.com/apis-docs/Backend-group7/Mobile/1.0.0>
+   [Swagger-authentication]:<https://app.swaggerhub.com/apis-docs/Backend-group7/Authentication/1.0.0>
    [dill]: <https://github.com/joemccann/dillinger>
    [git-repo-url]: <https://github.com/joemccann/dillinger.git>
    [john gruber]: <http://daringfireball.net>
