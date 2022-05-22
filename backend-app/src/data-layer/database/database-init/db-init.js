@@ -1,8 +1,11 @@
 /* initilaizes the database */
 const { Sequelize, DataTypes } = require('sequelize')
-
-/* Establishes connection with the database */
-const sequelize = new Sequelize(process.env.POSTGRES_CONNECTION)
+console.log(process.env.POSTGRES_CONNECTION)
+    /* Establishes connection with the database */
+const sequelize = new Sequelize('postgres', 'postgres', process.env.POSTGRES_PASSWORD, {
+    host: process.env.POSTGRES_CONNECTION,
+    dialect: "postgres"
+});
 
 /* Checks if the connection was successful */
 try {
@@ -119,30 +122,6 @@ try {
     /* Syncs all tables with the databse */
     sequelize.sync({ force: true }).then(function() {
 
-        Mowers.create({
-            userId: "a404db06-54a7-4715-9a6e-99cf6e1ccf4f",
-            mowerId: "abc123",
-            status: "stop"
-        })
-        MowingSessions.create({
-            mowerId: "abc123",
-            userId: "a404db06-54a7-4715-9a6e-99cf6e1ccf4f",
-            mowerPositions: {
-                points: [
-                    [53.33, 44.33],
-                    [66.44, 56.77]
-                ]
-
-            }
-        })
-        Obstacles.create({
-            mowerId: "abc123",
-            userId: "a404db06-54a7-4715-9a6e-99cf6e1ccf4f",
-            imageClassification: 'Cat',
-            obstaclePosition: [53.33, 44.33],
-            imagePath: 'https://mower-obstacles.s3.eu-north-1.amazonaws.com/obstacle-1652347989055.jpeg',
-            mowingSessionId: 1
-        })
     })
 
     /* Exports the tables so they are accessable for the database-iterface files */
