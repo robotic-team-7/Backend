@@ -8,14 +8,13 @@
 
         const exports = {}
 
+        //Defines the image and return a image classification
         exports.defineImage = function(imagePath, callback) {
             console.log(imagePath)
             client.labelDetection(imagePath)
                 .then((results) => {
                     const labels = results[0].labelAnnotations
                     console.log('Labels:');
-                    //labels.forEach(label => console.log(label.description));
-                    //console.log(labels)
                     callback([], labels[0].description)
 
                 })

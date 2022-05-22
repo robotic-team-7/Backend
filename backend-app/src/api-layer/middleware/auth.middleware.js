@@ -40,10 +40,8 @@ class AuthMiddleware {
             if (error) {
                 res.status(401).end()
             } else {
-                // console.log("Payload:");
-                // console.log(payload);
+                next()
             }
-            next()
         })
     }
 
@@ -57,7 +55,6 @@ class AuthMiddleware {
 
         try {
             const response = await fetch(URL);
-            // console.log(response);
 
             if (response.status !== 200) {
                 throw 'request not successfull'
@@ -73,7 +70,6 @@ class AuthMiddleware {
                 const pem = jwkToPem(jwk);
                 pems[key_id] = pem
             });
-            // console.log('Got all pems.');
 
         } catch (error) {
             console.log(error);

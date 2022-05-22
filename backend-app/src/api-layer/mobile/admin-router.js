@@ -5,7 +5,7 @@ const jwksRsa = require('jwks-rsa');
 
 const AdminCognitoService = require('./services/cognito.admin.config')
 
-// Put in .env variable?
+
 const checkIfAdmin = jwtAuthz(['Admins'], { customScopeKey: 'cognito:groups' });
 
 const checkJwt = jwt({
@@ -17,7 +17,6 @@ const checkJwt = jwt({
         rateLimit: true,
         jwksRequestsPerMinute: 5,
         jwksUri: process.env.JWK,
-        // jwksUri: `https://dev-t3vri3ge.us.auth0.com/.well-known/jwks.json`
     }),
 
     // Validate the audience and the issuer.

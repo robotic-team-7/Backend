@@ -26,7 +26,7 @@ module.exports = function() {
         const email = request.body.email
         const name = request.body.name
         const family_name = request.body.family_name
-            //username = username == undefined ? email.split('@')[0] + (Math.random() + 1).toString(10).substring(7) : username
+
 
         let userAttributes = [];
         userAttributes.push({ Name: 'email', Value: email });
@@ -36,7 +36,6 @@ module.exports = function() {
         cognito.signUpUser(username, password, userAttributes)
             .then(result => {
                 if (result === true) {
-                    //response.setHeader("Authorization", "Bearer " + bearerToken)
                     response.status(200).json({ username, userAttributes })
                 } else {
                     response.status(400).json({ message: result.message, code: result.code, statusCode: result.statusCode }).end()

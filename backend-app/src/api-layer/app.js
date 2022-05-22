@@ -20,7 +20,6 @@ module.exports = function({ mobileRouter, mowerRouter, obstacleRouter, mowingSes
     app.use('/mowing-sessions', mowingSessionRouter)
     app.use('/mobile', mobileRouter)
     app.use('/auth', authenticationRouter)
-        //app.use('/admin', adminRouter)
 
     app.use(bodyParser.urlencoded({ extended: false }))
 

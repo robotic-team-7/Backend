@@ -61,19 +61,6 @@ module.exports = function({ mowerInterface, mowingSessionInterface }) {
 
 
 
-    /*
-        //Start the mower
-        router.put('/start/:mowerId', function(request, response) { //post or put i dont know yet
-            const mowerId = request.params.mowerId
-
-        })
-
-        //Stop the mower
-        router.put('/stop/:mowerId', function(request, response) {
-            const mowerId = request.params.mowerId
-        })
-    */
-
 
 
 
@@ -177,7 +164,7 @@ module.exports = function({ mowerInterface, mowingSessionInterface }) {
 
 
 
-
+    //Delete mowing session
     router.delete('/mowingSession/:mowingSessionId', function(request, response) {
         const mowingSessionID = request.params.mowingSessionId
         const authorizationHeader = request.header("Authorization")
